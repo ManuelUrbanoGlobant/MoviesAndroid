@@ -3,6 +3,7 @@ object Versions {
         const val androidApplication = "7.1.2"
         const val androidLibrary = "7.1.2"
         const val kotlinAndroid = "1.6.10"
+        const val kotlinJvm = "1.6.10"
     }
 
     object AndroidX {

@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="11" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="MoviesAndroid.androidHelpers" target="11" />
+      <module name="MoviesAndroid.app" target="11" />
+      <module name="MoviesAndroid.buildSrc" target="11" />
+      <module name="MoviesAndroid.core" target="11" />
+      <module name="MoviesAndroid.movies" target="11" />
+      <module name="MoviesAndroid.movies.data" target="11" />
+      <module name="MoviesAndroid.movies.presentation" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>

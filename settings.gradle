@@ -14,3 +14,10 @@ dependencyResolutionManagement {
 }
 rootProject.name = "MoviesAndroid"
 include ':app'
+include ':kotlinHelpers'
+include ':androidHelpers'
+include ':core'
+include ':movies'
+include ':movies:data'
+include ':movies:domain'
+include ':movies:presentation'
