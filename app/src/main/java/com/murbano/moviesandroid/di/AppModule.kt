@@ -1,7 +1,6 @@
-package com.example.movies.data.di
+package com.murbano.moviesandroid.di
 
 import com.example.kotlinhelpers.Constants
-import com.example.movies.data.api.MoviesService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,8 +42,4 @@ object AppModule {
             .build()
     }
 
-    @Singleton
-    @Provides
-    fun provideMoviesService(retrofit: Retrofit): MoviesService =
-        retrofit.create(MoviesService::class.java)
 }
