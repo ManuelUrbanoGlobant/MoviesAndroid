@@ -1,8 +1,6 @@
 plugins {
     id(Dependencies.Plugins.androidLibrary)
     id(Dependencies.Plugins.kotlinAndroid)
-    id(Dependencies.Plugins.kotlinKapt)
-    id(Dependencies.Plugins.hiltAndroidPlugin)
 }
 
 android {
@@ -43,15 +41,6 @@ dependencies {
 
     //Material
     implementation(Dependencies.Material.googleMaterial)
-
-    //Hilt
-    implementation(Dependencies.Hilt.hiltVersion)
-    kapt(Dependencies.Hilt.hiltCompiler)
-
-    //Retrofit
-    implementation(Dependencies.Retrofit.retrofit2Version)
-    implementation(Dependencies.Retrofit.gsonVersion)
-    implementation(Dependencies.Retrofit.converterVersion)
 
     //Test
     testImplementation(Dependencies.Test.junit)
