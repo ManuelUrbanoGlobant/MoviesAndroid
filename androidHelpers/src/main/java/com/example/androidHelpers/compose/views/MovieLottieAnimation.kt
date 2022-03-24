@@ -2,14 +2,18 @@ package com.example.androidHelpers.compose.views
 
 import androidx.annotation.RawRes
 import androidx.compose.foundation.layout.size
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.*
 import com.example.androidhelpers.R
 
 @Composable
-fun MovieLottieAnimation(@RawRes resource: Int = R.raw.movie_loading) {
+fun MovieLottieAnimation(@RawRes resource: Int = R.raw.movie_loading, size: Dp = 100.dp) {
     val isPlaying by remember { mutableStateOf(true) }
     val speed by remember { mutableStateOf(1f) }
 
@@ -25,7 +29,7 @@ fun MovieLottieAnimation(@RawRes resource: Int = R.raw.movie_loading) {
     LottieAnimation(
         composition,
         progress,
-        modifier = Modifier.size(100.dp)
+        modifier = Modifier.size(size)
     )
 
 }

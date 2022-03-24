@@ -54,4 +54,15 @@ object Dependencies {
         val coil by lazy { "io.coil-kt:coil-compose:${Versions.UI.coil}" }
         val lottie by lazy {"com.airbnb.android:lottie-compose:${Versions.UI.lottie}"}
     }
+
+    object Pager {
+        val pager by lazy {"com.google.accompanist:accompanist-pager:${Versions.Pager.pager}"}
+        val indicators by lazy {"com.google.accompanist:accompanist-pager-indicators:${Versions.Pager.pager}"}
+    }
+
+    object DataStore {
+        val preferences by lazy {"androidx.datastore:datastore-preferences:${Versions.DataStore.datastore}"}
+        val core by lazy {"androidx.datastore:datastore-preferences-core:${Versions.DataStore.datastore}"}
+    }
+
 }
