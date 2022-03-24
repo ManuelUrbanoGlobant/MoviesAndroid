@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_page1_title">Movie List</string>
+    <string name="onboarding_page1_description">See the most popular movies in the world</string>
+    <string name="onboarding_page2_title">Movie Details</string>
+    <string name="onboarding_page2_description">Information details about movies, including title, overview, release date and duration</string>
+    <string name="onboarding_continue">Continue</string>
+</resources>

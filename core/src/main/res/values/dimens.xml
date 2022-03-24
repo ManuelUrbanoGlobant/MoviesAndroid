@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="horizontal_pager_padding">16dp</dimen>
+    <dimen name="outlined_button_corner_shape">20dp</dimen>
+    <dimen name="outlined_button_padding">8dp</dimen>
+    <dimen name="lottie_animation_size">200dp</dimen>
+
+    <dimen name="spacer_large">20dp</dimen>
+    <dimen name="spacer_medium">12dp</dimen>
+    <dimen name="spacer_small">8dp</dimen>
+
+
+</resources>
