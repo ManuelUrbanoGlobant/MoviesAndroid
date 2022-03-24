@@ -5,6 +5,8 @@ object Dependencies {
         const val kotlinAndroid = "org.jetbrains.kotlin.android"
         const val kotlinJvm = "org.jetbrains.kotlin.jvm"
         const val javaLibrary = "java-library"
+        const val kotlinKapt = "kotlin-kapt"
+        const val hiltAndroidPlugin = "dagger.hilt.android.plugin"
     }
 
     object AndroidX {
@@ -17,6 +19,21 @@ object Dependencies {
     object Material {
         const val googleMaterial =
             "com.google.android.material:material:${Versions.Material.googleMaterial}"
+    }
+
+    object Hilt {
+        const val hiltVersion =
+            "com.google.dagger:hilt-android:${Versions.Hilt.hiltVersion}"
+        const val hiltCompiler =
+            "com.google.dagger:hilt-android-compiler:${Versions.Hilt.hiltCompiler}"
+    }
+
+    object Retrofit {
+        const val retrofit2Version =
+            "com.squareup.retrofit2:retrofit:${Versions.Retrofit.retrofit2Version}"
+        const val gsonVersion = "com.google.code.gson:gson:${Versions.Retrofit.gsonVersion}"
+        const val converterVersion =
+            "com.squareup.retrofit2:converter-gson:${Versions.Retrofit.converterVersion}"
     }
 
     object Test {

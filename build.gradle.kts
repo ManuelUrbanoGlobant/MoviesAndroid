@@ -15,6 +15,15 @@ plugins {
         .apply(false)
 }
 
+buildscript {
+    repositories {
+        google()
+    }
+    dependencies {
+        classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.Plugins.hiltAndroid}")
+    }
+}
+
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }

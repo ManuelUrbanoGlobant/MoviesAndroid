@@ -4,6 +4,7 @@ object Versions {
         const val androidLibrary = "7.1.2"
         const val kotlinAndroid = "1.6.10"
         const val kotlinJvm = "1.6.10"
+        const val hiltAndroid = "2.28-alpha"
     }
 
     object AndroidX {
@@ -14,6 +15,17 @@ object Versions {
 
     object Material {
         const val googleMaterial = "1.5.0"
+    }
+
+    object Hilt {
+        const val hiltVersion = "2.28-alpha"
+        const val hiltCompiler = "2.28-alpha"
+    }
+
+    object Retrofit {
+        const val retrofit2Version = "2.9.0"
+        const val gsonVersion = "2.9.0"
+        const val converterVersion = "2.9.0"
     }
 
     object Test {
