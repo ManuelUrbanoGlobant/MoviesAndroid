@@ -63,4 +63,7 @@ dependencies {
     androidTestImplementation(Dependencies.AndroidTest.junit)
     androidTestImplementation(Dependencies.AndroidTest.espresso)
 
+    //Modules
+    implementation(project(":kotlinHelpers"))
+
 }

@@ -1,11 +1,10 @@
-package com.example.movies.data.di
+package com.murbano.moviesandroid.di
 
 import com.example.kotlinhelpers.Constants
-import com.example.movies.data.api.MoviesService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -13,7 +12,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object AppModule {
 
     @Singleton
@@ -43,9 +42,5 @@ object AppModule {
             .build()
     }
 
-    @Singleton
-    @Provides
-    fun provideMoviesService(retrofit: Retrofit): MoviesService =
-        retrofit.create(MoviesService::class.java)
 
 }
