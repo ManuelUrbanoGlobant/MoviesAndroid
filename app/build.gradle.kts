@@ -49,7 +49,7 @@ dependencies {
 
     //Hilt
     implementation(Dependencies.Hilt.hiltVersion)
-    implementation(Dependencies.Hilt.hiltCompiler)
+    kapt(Dependencies.Hilt.hiltCompiler)
 
     //Test
     testImplementation(Dependencies.Test.junit)
