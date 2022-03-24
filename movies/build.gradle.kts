@@ -48,4 +48,8 @@ dependencies {
     //AndroidTest
     androidTestImplementation(Dependencies.AndroidTest.junit)
     androidTestImplementation(Dependencies.AndroidTest.espresso)
+
+    //Modules
+    api(project(":movies:presentation"))
+    api(project(":movies:domain"))
 }

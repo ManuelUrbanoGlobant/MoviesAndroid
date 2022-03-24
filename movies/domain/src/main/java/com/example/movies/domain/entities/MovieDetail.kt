@@ -4,7 +4,9 @@ data class MovieDetail(
     val name: String,
     val date: String,
     val overview: String,
-    val director: String,
-    val score: Int,
+    val time: Int,
+    val score: Float,
     val thumbnail: String
-)
+) {
+    fun getCompleteUrlToDetails() = "https://image.tmdb.org/t/p/original$thumbnail"
+}

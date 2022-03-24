@@ -16,6 +16,14 @@ android {
         consumerProguardFiles("consumer-rules.pro")
     }
 
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.2.0-alpha04"
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -40,6 +48,7 @@ dependencies {
     implementation(Dependencies.AndroidX.coreKtx)
     implementation(Dependencies.AndroidX.appCompat)
     implementation(Dependencies.AndroidX.constraintlayout)
+    implementation(Dependencies.AndroidX.lifecycleRuntime)
 
     //Material
     implementation(Dependencies.Material.googleMaterial)
@@ -55,6 +64,20 @@ dependencies {
     androidTestImplementation(Dependencies.AndroidTest.junit)
     androidTestImplementation(Dependencies.AndroidTest.espresso)
 
+    //Navigation
+    implementation(Dependencies.AndroidX.navigationFragment)
+    implementation(Dependencies.AndroidX.navigationUi)
+
+    //Compose
+    implementation(Dependencies.Compose.activity)
+    implementation(Dependencies.Compose.material)
+    implementation(Dependencies.Compose.animation)
+    implementation(Dependencies.Compose.uiTooling)
+
+    //Coil
+    implementation(Dependencies.UI.coil)
+
     //Modules
     implementation(project(":movies:domain"))
+    implementation(project(":androidHelpers"))
 }

@@ -1,6 +1,8 @@
 plugins {
     id(Dependencies.Plugins.androidLibrary)
     id(Dependencies.Plugins.kotlinAndroid)
+    id(Dependencies.Plugins.kotlinKapt)
+    id(Dependencies.Plugins.hiltAndroidPlugin)
 }
 
 android {
@@ -30,6 +32,10 @@ android {
     kotlinOptions {
         jvmTarget = Configuration.jvmTarget
     }
+
+    kapt {
+        correctErrorTypes = true
+    }
 }
 
 dependencies {
@@ -45,7 +51,14 @@ dependencies {
     //Test
     testImplementation(Dependencies.Test.junit)
 
+    //Hilt
+    implementation(Dependencies.Hilt.hiltVersion)
+    kapt(Dependencies.Hilt.hiltCompiler)
+
     //AndroidTest
     androidTestImplementation(Dependencies.AndroidTest.junit)
     androidTestImplementation(Dependencies.AndroidTest.espresso)
+
+    //Modules
+    implementation(project(":movies"))
 }
