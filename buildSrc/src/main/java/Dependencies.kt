@@ -28,6 +28,14 @@ object Dependencies {
             "com.google.dagger:hilt-android-compiler:${Versions.Hilt.hiltCompiler}"
     }
 
+    object Retrofit {
+        const val retrofit2Version =
+            "com.squareup.retrofit2:retrofit:${Versions.Retrofit.retrofit2Version}"
+        const val gsonVersion = "com.google.code.gson:gson:${Versions.Retrofit.gsonVersion}"
+        const val converterVersion =
+            "com.squareup.retrofit2:converter-gson:${Versions.Retrofit.converterVersion}"
+    }
+
     object Test {
         const val junit = "junit:junit:${Versions.Test.junit}"
     }

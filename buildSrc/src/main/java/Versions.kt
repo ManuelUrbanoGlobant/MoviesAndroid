@@ -22,6 +22,12 @@ object Versions {
         const val hiltCompiler = "2.28-alpha"
     }
 
+    object Retrofit {
+        const val retrofit2Version = "2.9.0"
+        const val gsonVersion = "2.9.0"
+        const val converterVersion = "2.9.0"
+    }
+
     object Test {
         const val junit = "4.13.2"
     }
