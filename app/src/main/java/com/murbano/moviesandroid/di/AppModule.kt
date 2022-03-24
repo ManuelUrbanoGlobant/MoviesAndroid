@@ -1,5 +1,6 @@
 package com.murbano.moviesandroid.di
 
+import com.example.kotlinhelpers.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,7 +36,7 @@ object AppModule {
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("")
+            .baseUrl(Constants.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()
