@@ -32,6 +32,7 @@ object Versions {
 
     object Test {
         const val junit = "4.13.2"
+        const val mockk = "1.12.3"
     }
 
     object AndroidTest {
