@@ -14,34 +14,30 @@ class MoviesRepositoryImpl(
     private val movieDetailMapper: MovieDetailMapper
 ) : MoviesRepository {
     override suspend fun getListMovies(): Response<List<Movie>> {
-        lateinit var movieList: List<Movie>
-        try {
+        return try {
             val response = moviesRemoteDataSource.getListMovies()
             val body = response.body()
             if (body != null && response.isSuccessful) {
-                movieList = movieMapper.fromEntityList(body.movies)
+                Response.Success(movieMapper.fromEntityList(body.movies))
             } else {
-                return Response.Error("something went wrong")
+                Response.Error("something went wrong")
             }
         } catch (error: Exception) {
-            return Response.Error(error.message.toString())
+            Response.Error(error.message.toString())
         }
-        return Response.Success(movieList)
     }
 
     override suspend fun getDetailMovie(id: Int): Response<MovieDetail> {
-        lateinit var movieDetail: MovieDetail
-        try {
+        return try {
             val response = moviesRemoteDataSource.getDetailMovie(id)
             val body = response.body()
             if (body != null && response.isSuccessful) {
-                movieDetail = movieDetailMapper.mapFromEntity(body)
+                Response.Success(movieDetailMapper.mapFromEntity(body))
             } else {
-                return Response.Error("something went wrong")
+                Response.Error("something went wrong")
             }
         } catch (error: Exception) {
-            return Response.Error(error.message.toString())
+            Response.Error(error.message.toString())
         }
-        return Response.Success(movieDetail)
     }
 }

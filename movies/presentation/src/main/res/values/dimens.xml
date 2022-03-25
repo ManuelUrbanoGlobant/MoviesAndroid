@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="height_image_detail">200dp</dimen>
+    <dimen name="padding_view_detail">8dp</dimen>
+</resources>

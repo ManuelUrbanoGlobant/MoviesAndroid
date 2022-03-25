@@ -12,9 +12,11 @@ class MovieDetailMapper : EntityMapper<MovieDetailDto, MovieDetail> {
                 name = title,
                 date = releaseDate,
                 overview = overview,
+                //TODO the schema from API doesn't have the director field
                 director = "",
                 score = voteAverage,
-                thumbnail = backdropPath
+                thumbnail = backdropPath,
+                time = runtime
             )
         }
     }

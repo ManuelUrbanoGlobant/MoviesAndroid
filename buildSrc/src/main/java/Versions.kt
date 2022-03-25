@@ -11,6 +11,8 @@ object Versions {
         const val coreKtx = "1.7.0"
         const val appCompat = "1.4.1"
         const val constraintlayout = "2.1.3"
+        const val navigation = "2.4.1"
+        const val lifecycleRuntime = "2.5.0-alpha05"
     }
 
     object Material {
@@ -35,5 +37,15 @@ object Versions {
     object AndroidTest {
         const val junit = "1.1.3"
         const val espresso = "3.4.0"
+    }
+
+    object Compose {
+        const val activity = "1.3.1"
+        const val generalVersion = "1.1.0"
+    }
+
+    object UI {
+        const val coil = "2.0.0-rc02"
+        const val lottie = "4.0.0"
     }
 }

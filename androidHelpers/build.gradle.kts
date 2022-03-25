@@ -14,6 +14,14 @@ android {
         consumerProguardFiles("consumer-rules.pro")
     }
 
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.2.0-alpha04"
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -41,6 +49,15 @@ dependencies {
 
     //Material
     implementation(Dependencies.Material.googleMaterial)
+
+    //Compose
+    implementation(Dependencies.Compose.activity)
+    implementation(Dependencies.Compose.material)
+    implementation(Dependencies.Compose.animation)
+    implementation(Dependencies.Compose.uiTooling)
+
+    //Lottie
+    implementation(Dependencies.UI.lottie)
 
     //Test
     testImplementation(Dependencies.Test.junit)
