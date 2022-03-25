@@ -30,8 +30,7 @@ fun MovieItem(
     ) {
         Box(modifier = Modifier.height(250.dp)) {
             Image(
-                painter = rememberAsyncImagePainter( "https://cdn.shopify.com/s/files/1/0051/8805/9206/products/dc-el-boton-portada_461x.jpg?v=1602284749"),
-               // painter = painter,
+                painter = rememberAsyncImagePainter( movie.getCompleteUrlToDetails()),
                 contentDescription = movie.overview,
                 contentScale = ContentScale.Crop,
             )
