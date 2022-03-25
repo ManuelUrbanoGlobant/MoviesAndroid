@@ -16,6 +16,14 @@ android {
         consumerProguardFiles("consumer-rules.pro")
     }
 
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.Compose.generalVersion
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -55,10 +63,21 @@ dependencies {
     implementation(Dependencies.Hilt.hiltVersion)
     kapt(Dependencies.Hilt.hiltCompiler)
 
+    //Compose
+    implementation(Dependencies.Compose.activity)
+    implementation(Dependencies.Compose.material)
+    implementation(Dependencies.Compose.animation)
+    implementation(Dependencies.Compose.uiTooling)
+
+    // Pager
+    implementation(Dependencies.Pager.pager)
+    implementation(Dependencies.Pager.indicators)
+
     //AndroidTest
     androidTestImplementation(Dependencies.AndroidTest.junit)
     androidTestImplementation(Dependencies.AndroidTest.espresso)
 
     //Modules
     implementation(project(":movies"))
+    implementation(project(":androidHelpers"))
 }

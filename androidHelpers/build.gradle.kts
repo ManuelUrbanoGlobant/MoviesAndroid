@@ -1,6 +1,8 @@
 plugins {
     id(Dependencies.Plugins.androidLibrary)
     id(Dependencies.Plugins.kotlinAndroid)
+    id(Dependencies.Plugins.kotlinKapt)
+    id(Dependencies.Plugins.hiltAndroidPlugin)
 }
 
 android {
@@ -47,6 +49,10 @@ dependencies {
     implementation(Dependencies.AndroidX.appCompat)
     implementation(Dependencies.AndroidX.constraintlayout)
 
+    //Hilt
+    implementation(Dependencies.Hilt.hiltVersion)
+    kapt(Dependencies.Hilt.hiltCompiler)
+
     //Material
     implementation(Dependencies.Material.googleMaterial)
 
@@ -55,6 +61,10 @@ dependencies {
     implementation(Dependencies.Compose.material)
     implementation(Dependencies.Compose.animation)
     implementation(Dependencies.Compose.uiTooling)
+
+    //Datastore
+    implementation(Dependencies.DataStore.preferences)
+    implementation(Dependencies.DataStore.core)
 
     //Lottie
     implementation(Dependencies.UI.lottie)

@@ -42,11 +42,19 @@ object Versions {
 
     object Compose {
         const val activity = "1.3.1"
-        const val generalVersion = "1.1.0"
+        const val generalVersion = "1.1.1"
     }
 
     object UI {
         const val coil = "2.0.0-rc02"
         const val lottie = "4.0.0"
+    }
+
+    object Pager {
+        const val pager = "0.23.1"
+    }
+
+    object DataStore {
+        const val datastore = "1.0.0"
     }
 }
