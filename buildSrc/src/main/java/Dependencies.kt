@@ -43,6 +43,7 @@ object Dependencies {
 
     object Test {
         val junit by lazy { "junit:junit:${Versions.Test.junit}" }
+        val mockk by lazy { "io.mockk:mockk:${Versions.Test.mockk}" }
     }
 
     object AndroidTest {

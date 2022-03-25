@@ -59,6 +59,7 @@ dependencies {
 
     //Test
     testImplementation(Dependencies.Test.junit)
+    testImplementation(Dependencies.Test.mockk)
 
     //AndroidTest
     androidTestImplementation(Dependencies.AndroidTest.junit)
