@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -29,7 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MoviesListFragment : BaseFragment()  {
+class MoviesListFragment : BaseFragment() {
 
     private val viewModel: MoviesListViewModel by viewModels()
 
@@ -86,12 +87,19 @@ class MoviesListFragment : BaseFragment()  {
     }
 
     @Composable
-    fun MovieList(movieList : List<Movie>) {
-        LazyRow{
+    fun MovieList(movieList: List<Movie>) {
+        LazyRow {
             itemsIndexed(items = movieList) { _, item ->
                 Box(modifier = Modifier
                     .fillMaxWidth(0.5f)
                     .padding(5.dp)
+                    .clickable {
+                        val navDirection =
+                            MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailFragment(
+                                movieId = 100
+                            )
+                        navigateDeepLinkRequest(navDirection)
+                    }
                 ) {
                     MovieItem(item)
                 }

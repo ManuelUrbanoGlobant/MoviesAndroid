@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.kotlinhelpers.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -15,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigateToMovies() {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("app://com.example.movies/movies"))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Constants.LIST_MOVIES_URI))
         startActivity(intent)
         finish()
     }

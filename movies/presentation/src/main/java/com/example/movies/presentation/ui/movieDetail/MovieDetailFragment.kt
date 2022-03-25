@@ -15,6 +15,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.androidHelpers.extensions.showToast
 import com.example.movies.domain.entities.MovieDetail
 import com.example.movies.presentation.base.BaseFragment
@@ -27,7 +28,9 @@ class MovieDetailFragment : BaseFragment() {
     private val viewModel: MovieDetailViewModel by viewModels()
 
     var movieDetail: MutableState<MovieDetail?> = mutableStateOf(null)
-    var isLoadingVisible: MutableState<Boolean> = mutableStateOf(false)
+    private var isLoadingVisible: MutableState<Boolean> = mutableStateOf(false)
+
+    val args: MovieDetailFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,6 +82,8 @@ class MovieDetailFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //TODO implement viewModel call using SafeArg Argument passed through NavigationController
+        //TODO ie:  viewModel.getDetailMovie( args.movieId )
         viewModel.getDetailMovie()
     }
 
