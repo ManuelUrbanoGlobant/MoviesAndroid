@@ -7,6 +7,8 @@ object Dependencies {
         val javaLibrary by lazy { "java-library" }
         val kotlinKapt by lazy { "kotlin-kapt" }
         val hiltAndroidPlugin by lazy { "dagger.hilt.android.plugin" }
+        val safeArgsKotlin by lazy { "androidx.navigation.safeargs.kotlin" }
+
     }
 
     object AndroidX {
@@ -15,8 +17,7 @@ object Dependencies {
         val constraintlayout by lazy { "androidx.constraintlayout:constraintlayout:${Versions.AndroidX.constraintlayout}" }
         val navigationFragment by lazy { "androidx.navigation:navigation-fragment-ktx:${Versions.AndroidX.navigation}" }
         val navigationUi by lazy { "androidx.navigation:navigation-ui-ktx:${Versions.AndroidX.navigation}" }
-        val lifecycleRuntime by lazy {"androidx.lifecycle:lifecycle-runtime-ktx:${Versions.AndroidX.lifecycleRuntime}"}
-
+        val lifecycleRuntime by lazy { "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.AndroidX.lifecycleRuntime}" }
     }
 
     object Material {
@@ -52,6 +53,6 @@ object Dependencies {
 
     object UI {
         val coil by lazy { "io.coil-kt:coil-compose:${Versions.UI.coil}" }
-        val lottie by lazy {"com.airbnb.android:lottie-compose:${Versions.UI.lottie}"}
+        val lottie by lazy { "com.airbnb.android:lottie-compose:${Versions.UI.lottie}" }
     }
 }

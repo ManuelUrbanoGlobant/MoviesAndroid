@@ -7,9 +7,23 @@
     <fragment
         android:id="@+id/movieDetailFragment"
         android:name="com.example.movies.presentation.ui.movieDetail.MovieDetailFragment"
-        android:label="MovieDetailFragment" />
+        android:label="MovieDetailFragment">
+        <deepLink
+            android:id="@+id/deepLink"
+            app:action="MOVIE_DETAIL_ACTION"
+            app:uri="app://com.example.movies/moviedetail" />
+        <argument
+            android:name="movieId"
+            app:argType="long"
+            android:defaultValue="-1L" />
+    </fragment>
     <fragment
         android:id="@+id/moviesListFragment"
         android:name="com.example.movies.presentation.ui.moviesList.MoviesListFragment"
-        android:label="MoviesListFragment" />
+        android:label="MoviesListFragment" >
+        <action
+            android:id="@+id/action_moviesListFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
+
 </navigation>

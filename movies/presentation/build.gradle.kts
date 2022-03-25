@@ -3,6 +3,7 @@ plugins {
     id(Dependencies.Plugins.kotlinAndroid)
     id(Dependencies.Plugins.kotlinKapt)
     id(Dependencies.Plugins.hiltAndroidPlugin)
+    id(Dependencies.Plugins.safeArgsKotlin)
 }
 
 android {
