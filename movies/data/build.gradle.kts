@@ -8,10 +8,11 @@ plugins {
 android {
     compileSdk = Configuration.compileSDK
 
+
     defaultConfig {
         minSdk = Configuration.minSDdk
         targetSdk = Configuration.targetSdk
-
+        buildConfigField("String","API_KEY", "\"0266c46c25aa2fd93373aba4f48e0fe8\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
