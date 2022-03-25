@@ -14,8 +14,8 @@
             app:uri="app://com.example.movies/moviedetail" />
         <argument
             android:name="movieId"
-            app:argType="long"
-            android:defaultValue="-1L" />
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
     <fragment
         android:id="@+id/moviesListFragment"

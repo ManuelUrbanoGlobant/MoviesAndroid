@@ -46,7 +46,7 @@ fun MovieList(
                             .clickable {
                                 val navDirection =
                                     MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailFragment(
-                                        movieId = 100
+                                        movieId = item.id
                                     )
                                 onNavigate(navDirection)
                             }
