@@ -41,11 +41,7 @@ class MainActivity : AppCompatActivity() {
     private fun reviewOnBoardingStatus () {
         lifecycleScope.launch {
             storeHelper.getBooleanValue(PreferenceConstants.ON_BOARDING_KEY).collectLatest {
-                if (it) {
-                    navigateToMovies()
-                } else {
-                    addOnBoardingFragment()
-                }
+                if (it) navigateToMovies() else addOnBoardingFragment()
             }
         }
     }
