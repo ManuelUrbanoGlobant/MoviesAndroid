@@ -19,10 +19,12 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Scale
 import com.example.movies.domain.entities.Movie
+import com.example.movies.presentation.R
+
 
 
 @Composable
-fun MovieItem(movie : Movie?) {
+fun MovieItem(movie: Movie?) {
     Card(
         modifier = Modifier
             .padding(8.dp, 4.dp)
@@ -43,7 +45,7 @@ fun MovieItem(movie : Movie?) {
                             .data(data = movie?.getCompleteUrlToDetails())
                             .apply(block = fun ImageRequest.Builder.() {
                                 scale(Scale.FILL)
-                              //  transformations(CircleCropTransformation())
+                                placeholder(R.drawable.movie_placeholder)
                             }).build()
                     ),
                     contentDescription = movie?.overview,
