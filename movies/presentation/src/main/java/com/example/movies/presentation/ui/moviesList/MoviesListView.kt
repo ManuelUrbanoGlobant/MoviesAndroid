@@ -2,26 +2,63 @@ package com.example.movies.presentation.ui.moviesList
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavDirections
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Scale
+import com.example.androidHelpers.compose.views.MovieLottieAnimation
 import com.example.movies.domain.entities.Movie
 import com.example.movies.presentation.R
 
 
+@Composable
+fun MovieList(
+    movieList: List<Movie>?,
+    isLoadingVisible: Boolean = false,
+    onNavigate: (NavDirections) -> Unit
+) {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        if (isLoadingVisible) {
+            MovieLottieAnimation()
+        } else {
+            movieList?.let {
+                LazyColumn {
+                    itemsIndexed(items = movieList) { _, item ->
+                        Box(modifier = Modifier
+                            .clickable {
+                                val navDirection =
+                                    MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailFragment(
+                                        movieId = item.id
+                                    )
+                                onNavigate(navDirection)
+                            }
+                        ) {
+                            MovieItem(item)
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+}
 
 @Composable
 fun MovieItem(movie: Movie?) {
@@ -31,13 +68,15 @@ fun MovieItem(movie: Movie?) {
             .fillMaxWidth()
             .height(100.dp),
         shape = RoundedCornerShape(8.dp),
-        elevation = 4.dp)
+        elevation = 4.dp
+    )
     {
-        Surface() {
+        Surface {
             Row(
                 Modifier
                     .padding(4.dp)
-                    .fillMaxSize()) {
+                    .fillMaxSize()
+            ) {
 
                 Image(
                     painter = rememberAsyncImagePainter(
