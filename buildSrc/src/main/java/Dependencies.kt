@@ -16,7 +16,7 @@ object Dependencies {
         val navigationFragment by lazy { "androidx.navigation:navigation-fragment-ktx:${Versions.AndroidX.navigation}" }
         val navigationUi by lazy { "androidx.navigation:navigation-ui-ktx:${Versions.AndroidX.navigation}" }
         val lifecycleRuntime by lazy { "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.AndroidX.lifecycleRuntime}" }
-
+        val splashScreen by lazy { "androidx.core:core-splashscreen:${Versions.AndroidX.splashScreen}" }
     }
 
     object Material {
