@@ -52,6 +52,7 @@ dependencies {
     implementation(Dependencies.AndroidX.coreKtx)
     implementation(Dependencies.AndroidX.appCompat)
     implementation(Dependencies.AndroidX.constraintlayout)
+    implementation(Dependencies.AndroidX.splashScreen)
 
     //Material
     implementation(Dependencies.Material.googleMaterial)

@@ -16,7 +16,7 @@ object Dependencies {
         val navigationFragment by lazy { "androidx.navigation:navigation-fragment-ktx:${Versions.AndroidX.navigation}" }
         val navigationUi by lazy { "androidx.navigation:navigation-ui-ktx:${Versions.AndroidX.navigation}" }
         val lifecycleRuntime by lazy { "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.AndroidX.lifecycleRuntime}" }
-
+        val splashScreen by lazy { "androidx.core:core-splashscreen:${Versions.AndroidX.splashScreen}" }
     }
 
     object Material {
@@ -43,6 +43,10 @@ object Dependencies {
 
     object Test {
         val junit by lazy { "junit:junit:${Versions.Test.junit}" }
+        val coroutinesCore by lazy {"org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Test.coroutines}"}
+        val coroutinesTest by lazy {"org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.Test.coroutines}"}
+        val mockk by lazy { "io.mockk:mockk:${Versions.Test.mockk}" }
+        val jupiter by lazy {"org.junit.jupiter:junit-jupiter-engine:${Versions.Test.jupiter}"}
     }
 
     object AndroidTest {

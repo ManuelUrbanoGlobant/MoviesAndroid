@@ -25,6 +25,8 @@ import kotlinx.coroutines.launch
 class MovieDetailFragment : BaseFragment() {
 
     private val viewModel: MovieDetailViewModel by viewModels()
+    // TODO: Remove once we receive movie id from movie list
+    private val movieId = 632727
 
     var movieDetail: MutableState<MovieDetail?> = mutableStateOf(null)
     var isLoadingVisible: MutableState<Boolean> = mutableStateOf(false)
@@ -78,7 +80,7 @@ class MovieDetailFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getDetailMovie()
+        viewModel.getDetailMovie(movieId)
     }
 
 }

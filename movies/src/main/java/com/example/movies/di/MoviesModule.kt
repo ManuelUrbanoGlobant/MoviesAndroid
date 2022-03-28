@@ -1,4 +1,4 @@
-package com.example.movies.data.di
+package com.example.movies.di
 
 import android.content.Context
 import androidx.room.Room
@@ -14,17 +14,19 @@ import com.example.movies.data.mappers.MovieDTOMapper
 import com.example.movies.data.mappers.MovieORMMapper
 import com.example.movies.data.repositories.MoviesRepositoryImpl
 import com.example.movies.domain.repositories.MoviesRepository
+import com.example.movies.domain.usecases.GetDetailMovieUseCase
+import com.example.movies.domain.usecases.GetDetailMovieUseCaseImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 import retrofit2.Retrofit
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object MoviesDataModule {
+object MoviesModule {
 
     @Singleton
     @Provides
@@ -71,4 +73,7 @@ object MoviesDataModule {
         movieDTOMapper,
         movieDetailMapper
     )
+
+    @Provides
+    fun provideGetDetailMovieUseCase(repository: MoviesRepository): GetDetailMovieUseCase = GetDetailMovieUseCaseImpl(repository)
 }

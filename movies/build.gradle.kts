@@ -1,6 +1,8 @@
 plugins {
     id(Dependencies.Plugins.androidLibrary)
     id(Dependencies.Plugins.kotlinAndroid)
+    id(Dependencies.Plugins.kotlinKapt)
+    id(Dependencies.Plugins.hiltAndroidPlugin)
 }
 
 android {
@@ -42,6 +44,15 @@ dependencies {
     //Material
     implementation(Dependencies.Material.googleMaterial)
 
+    //Retrofit
+    implementation(Dependencies.Retrofit.retrofit2Version)
+    implementation(Dependencies.Retrofit.gsonVersion)
+    implementation(Dependencies.Retrofit.converterVersion)
+
+    //Hilt
+    implementation(Dependencies.Hilt.hiltVersion)
+    kapt(Dependencies.Hilt.hiltCompiler)
+
     //Test
     testImplementation(Dependencies.Test.junit)
 
@@ -52,4 +63,5 @@ dependencies {
     //Modules
     api(project(":movies:presentation"))
     api(project(":movies:domain"))
+    api(project(":movies:data"))
 }
