@@ -5,13 +5,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,14 +35,16 @@ import com.example.movies.domain.entities.Movie
 fun MovieList(
     movieList: List<Movie>?,
     isLoadingVisible: Boolean = false,
-    onNavigate: (NavDirections) -> Unit
+    onNavigate: (NavDirections) -> Unit,
+    viewModel: MoviesListViewModel
 ) {
+    val listState = rememberLazyListState()
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         if (isLoadingVisible) {
             MovieLottieAnimation()
         } else {
             movieList?.let {
-                LazyColumn {
+                LazyColumn(state = listState) {
                     itemsIndexed(items = movieList) { _, item ->
                         Box(modifier = Modifier
                             .clickable {
@@ -55,7 +59,9 @@ fun MovieList(
                         }
                     }
                 }
-
+                listState.OnBottomReached {
+                    viewModel.getMoviesList()
+                }
             }
         }
     }
@@ -126,5 +132,28 @@ fun MovieItem(movie: Movie?) {
                 }
             }
         }
+    }
+}
+
+@Composable
+fun LazyListState.OnBottomReached(
+    loadMore: () -> Unit
+) {
+    val shouldLoadMore = remember {
+        derivedStateOf {
+            val lastVisibleItem = layoutInfo.visibleItemsInfo.lastOrNull()
+                ?: return@derivedStateOf true
+
+            lastVisibleItem.index == layoutInfo.totalItemsCount - 1
+        }
+    }
+
+    // Convert the state into a cold flow and collect
+    LaunchedEffect(shouldLoadMore) {
+        snapshotFlow { shouldLoadMore.value }
+            .collect {
+                // if should load more, then invoke loadMore
+                if (it) loadMore()
+            }
     }
 }

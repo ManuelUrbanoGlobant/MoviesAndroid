@@ -41,7 +41,9 @@ class MoviesListFragment : BaseFragment() {
                 MovieList(
                     moviesList.value,
                     isLoadingVisible.value,
-                    onNavigate = { dest -> findNavController().navigate(dest) })
+                    onNavigate = { dest -> findNavController().navigate(dest) },
+                    viewModel
+                )
             }
         }
     }
@@ -76,10 +78,5 @@ class MoviesListFragment : BaseFragment() {
     private fun showError(uiState: MoviesListUiState.Error) {
         requireContext().showToast(uiState.message)
         isLoadingVisible.value = false
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.getMoviesList()
     }
 }
