@@ -21,15 +21,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavDirections
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Scale
 import com.example.androidHelpers.compose.views.MovieLottieAnimation
 import com.example.movies.domain.entities.Movie
+import com.example.movies.presentation.R
+
 
 @Composable
 fun MovieList(
@@ -78,7 +77,7 @@ fun MovieItem(movie: Movie?) {
         elevation = 4.dp
     )
     {
-        Surface() {
+        Surface {
             Row(
                 Modifier
                     .padding(4.dp)
@@ -91,7 +90,7 @@ fun MovieItem(movie: Movie?) {
                             .data(data = movie?.getCompleteUrlToDetails())
                             .apply(block = fun ImageRequest.Builder.() {
                                 scale(Scale.FILL)
-                                //  transformations(CircleCropTransformation())
+                                placeholder(R.drawable.movie_placeholder)
                             }).build()
                     ),
                     contentDescription = movie?.overview,
