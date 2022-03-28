@@ -13,5 +13,5 @@ class MoviesRemoteDataSourceImpl(
         moviesService.getListMovies(apiKey, page)
 
     override suspend fun getDetailMovie(id: Int): Response<MovieDetailDto> =
-        moviesService.getMovieDetail(id)
+        moviesService.getMovieDetail(id, apiKey)
 }

@@ -43,6 +43,10 @@ object Dependencies {
 
     object Test {
         val junit by lazy { "junit:junit:${Versions.Test.junit}" }
+        val coroutinesCore by lazy {"org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Test.coroutines}"}
+        val coroutinesTest by lazy {"org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.Test.coroutines}"}
+        val mockk by lazy { "io.mockk:mockk:${Versions.Test.mockk}" }
+        val jupiter by lazy {"org.junit.jupiter:junit-jupiter-engine:${Versions.Test.jupiter}"}
     }
 
     object AndroidTest {
