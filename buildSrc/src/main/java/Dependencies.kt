@@ -65,4 +65,10 @@ object Dependencies {
         val core by lazy { "androidx.datastore:datastore-preferences-core:${Versions.DataStore.datastore}" }
     }
 
+    object Room {
+        val room by lazy { "androidx.room:room-runtime:${Versions.Room.room}" }
+        val compiler by lazy { "androidx.room:room-compiler:${Versions.Room.room}" }
+        val ktx by lazy { "androidx.room:room-ktx:${Versions.Room.room}" }
+    }
+
 }

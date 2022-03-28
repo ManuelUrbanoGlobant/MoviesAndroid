@@ -63,4 +63,10 @@ dependencies {
 
     //Modules
     implementation(project(":movies:domain"))
+
+    //Room
+    implementation(Dependencies.Room.room)
+    kapt(Dependencies.Room.compiler)
+    implementation(Dependencies.Room.ktx)
+
 }
