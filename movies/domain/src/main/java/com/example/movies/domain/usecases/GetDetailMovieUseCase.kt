@@ -4,5 +4,5 @@ import com.example.kotlinhelpers.Response
 import com.example.movies.domain.entities.MovieDetail
 
 interface GetDetailMovieUseCase {
-    suspend fun invoke(params: GetDetailMovieUseCaseImpl.Params): Response<MovieDetail>
+    suspend fun invoke(id: Int): Response<MovieDetail>
 }

@@ -33,6 +33,8 @@ object Versions {
     object Test {
         const val junit = "4.13.2"
         const val mockk = "1.12.3"
+        const val coroutines = "1.6.0"
+        const val jupiter = "5.8.2"
     }
 
     object AndroidTest {

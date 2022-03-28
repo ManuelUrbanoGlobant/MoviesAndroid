@@ -6,9 +6,5 @@ import com.example.movies.domain.repositories.MoviesRepository
 
 class GetDetailMovieUseCaseImpl (private val moviesRepository: MoviesRepository): GetDetailMovieUseCase {
 
-    override suspend fun invoke(params: Params): Response<MovieDetail> = moviesRepository.getDetailMovie(params.movieId)
-
-    data class Params(
-        val movieId: Int
-    )
+    override suspend fun invoke(id: Int): Response<MovieDetail> = moviesRepository.getDetailMovie(id)
 }
