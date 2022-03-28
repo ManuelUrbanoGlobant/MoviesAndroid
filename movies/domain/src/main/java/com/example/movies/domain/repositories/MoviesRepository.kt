@@ -5,6 +5,6 @@ import com.example.movies.domain.entities.Movie
 import com.example.movies.domain.entities.MovieDetail
 
 interface MoviesRepository {
-    suspend fun getListMovies(): Response<List<Movie>>
+    suspend fun getListMovies(page: Int?): Response<List<Movie>>
     suspend fun getDetailMovie(id: Int): Response<MovieDetail>
 }
