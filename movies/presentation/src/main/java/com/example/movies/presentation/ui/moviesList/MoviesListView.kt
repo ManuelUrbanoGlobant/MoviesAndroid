@@ -9,10 +9,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,21 +42,34 @@ fun MovieList(
             movieList?.let {
                 LazyColumn(state = listState) {
                     itemsIndexed(items = movieList) { _, item ->
-                        Box(modifier = Modifier
-                            .clickable {
-                                val navDirection =
-                                    MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailFragment(
-                                        movieId = item.id
-                                    )
-                                onNavigate(navDirection)
+                        if (item.id > 0) {
+                            Box(modifier = Modifier
+                                .clickable {
+                                    val navDirection =
+                                        MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailFragment(
+                                            movieId = item.id
+                                        )
+                                    onNavigate(navDirection)
+                                }
+                            ) {
+                                MovieItem(item)
                             }
-                        ) {
-                            MovieItem(item)
+                        } else if (item.id == 0) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Column() {
+                                    CircularProgressIndicator()
+                                    Text(text = "Loading...")
+                                }
+                            }
                         }
                     }
                 }
-                listState.OnBottomReached {
-                    viewModel.getMoviesList()
+                listState.OnBottomReached(buffer = 1) {
+                    viewModel.removeProgressItem()
                 }
             }
         }
@@ -136,14 +146,18 @@ fun MovieItem(movie: Movie?) {
 
 @Composable
 fun LazyListState.OnBottomReached(
+    buffer: Int = 0,
     loadMore: () -> Unit
 ) {
+
+    require(buffer >= 0) { "buffer cannot be negative, but was $buffer" }
+
     val shouldLoadMore = remember {
         derivedStateOf {
             val lastVisibleItem = layoutInfo.visibleItemsInfo.lastOrNull()
                 ?: return@derivedStateOf true
 
-            lastVisibleItem.index == layoutInfo.totalItemsCount - 1
+            lastVisibleItem.index >= layoutInfo.totalItemsCount - 1 - buffer
         }
     }
 

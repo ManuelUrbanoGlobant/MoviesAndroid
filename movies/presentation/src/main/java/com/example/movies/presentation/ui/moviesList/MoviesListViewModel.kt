@@ -1,5 +1,6 @@
 package com.example.movies.presentation.ui.moviesList
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -30,7 +31,7 @@ class MoviesListViewModel @Inject constructor() : ViewModel() {
     fun getMoviesList() {
         viewModelScope.launch(Dispatchers.IO) {
             if (nextPage <= maxPage) {
-                _uiState.emit(MoviesListUiState.Loading)
+                //_uiState.emit(MoviesListUiState.Loading)
                 delay(1500)
                 when (nextPage) {
                     1 -> {
@@ -342,6 +343,7 @@ class MoviesListViewModel @Inject constructor() : ViewModel() {
                     }
                 }
 
+                movieList.add(Movie())
                 if (movieList.isEmpty()) {
                     _uiState.emit(MoviesListUiState.Error("No se encontraron peliculas"))
                 } else {
@@ -353,4 +355,11 @@ class MoviesListViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    fun removeProgressItem() {
+        viewModelScope.launch {
+            delay(400)
+            movieList.remove(Movie())
+            getMoviesList()
+        }
+    }
 }
