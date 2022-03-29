@@ -62,6 +62,6 @@ object Versions {
     }
 
     object Room {
-        const val room = "2.4.2"
+        const val room = "2.5.0-alpha01"
     }
 }

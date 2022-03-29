@@ -2,10 +2,10 @@ package com.example.movies.data.repositories
 
 import com.example.kotlinhelpers.Response
 import com.example.movies.data.datasource.MoviesRemoteDataSource
-import com.example.movies.data.entities.MovieDetailDto
-import com.example.movies.data.entities.MovieListDto
-import com.example.movies.data.mappers.MovieDetailMapper
-import com.example.movies.data.mappers.MovieMapper
+import com.example.movies.data.entities.dto.MovieDetailDTO
+import com.example.movies.data.entities.dto.MovieListDTO
+import com.example.movies.data.mappers.MovieDTOMapper
+import com.example.movies.data.mappers.MovieDetailDTOMapper
 import io.mockk.*
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
@@ -18,17 +18,17 @@ class MoviesRepositoryImplTest {
 
     private lateinit var moviesRepositoryImpl: MoviesRepositoryImpl
     private val mockMoviesRemoteDataSource: MoviesRemoteDataSource = mockk()
-    private val mockMovieMapper: MovieMapper = mockk(relaxed = true)
-    private val mockMovieDetailMapper: MovieDetailMapper = mockk(relaxed = true)
-    private val mockMovieListDto: MovieListDto = mockk(relaxed = true)
-    private val mockMovieDetailDto: MovieDetailDto = mockk(relaxed = true)
+    private val mockMovieMapper: MovieDTOMapper = mockk(relaxed = true)
+    private val mockMovieDetailDTOMapper: MovieDetailDTOMapper = mockk(relaxed = true)
+    private val mockMovieListDto: MovieListDTO = mockk(relaxed = true)
+    private val mockMovieDetailDto: MovieDetailDTO = mockk(relaxed = true)
     private val movieId = 1
     private val pageNumber = 1
 
     @Before
     fun setUp() {
         moviesRepositoryImpl =
-            MoviesRepositoryImpl(mockMoviesRemoteDataSource, mockMovieMapper, mockMovieDetailMapper)
+            MoviesRepositoryImpl(mockMoviesRemoteDataSource, mockMovieMapper, mockMovieDetailDTOMapper)
     }
 
     @Test
@@ -54,7 +54,7 @@ class MoviesRepositoryImplTest {
 
     @Test
     fun shouldResponseErrorCallGetListMoviesDataSource() = runBlocking {
-        val responseRetrofit = ResponseRetrofit.error<MovieListDto>(404, mockk(relaxed = true))
+        val responseRetrofit = ResponseRetrofit.error<MovieListDTO>(404, mockk(relaxed = true))
         coEvery { mockMoviesRemoteDataSource.getListMovies(pageNumber) } returns responseRetrofit
 
         val response = moviesRepositoryImpl.getListMovies(pageNumber)
@@ -95,7 +95,7 @@ class MoviesRepositoryImplTest {
 
     @Test
     fun shouldResponseErrorGetDetailMovie() = runBlocking {
-        val responseRetrofit = ResponseRetrofit.error<MovieDetailDto>(404, mockk(relaxed = true))
+        val responseRetrofit = ResponseRetrofit.error<MovieDetailDTO>(404, mockk(relaxed = true))
         coEvery { mockMoviesRemoteDataSource.getDetailMovie(movieId) } returns responseRetrofit
 
         val response = moviesRepositoryImpl.getDetailMovie(movieId)

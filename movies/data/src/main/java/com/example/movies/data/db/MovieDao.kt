@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveMovie(movieDTO: MovieORM)
+    suspend fun saveMovie(movie: MovieORM)
 
     @Query("SELECT * FROM movie")
     fun getFavouritesMovies(): Flow<List<MovieORM>>

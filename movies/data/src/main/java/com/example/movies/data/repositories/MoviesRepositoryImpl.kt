@@ -4,7 +4,7 @@ import com.example.kotlinhelpers.Response
 import com.example.movies.data.datasource.MoviesLocalDataSource
 import com.example.movies.data.datasource.MoviesRemoteDataSource
 import com.example.movies.data.mappers.MovieDTOMapper
-import com.example.movies.data.mappers.MovieDetailMapper
+import com.example.movies.data.mappers.MovieDetailDTOMapper
 import com.example.movies.data.mappers.MovieORMMapper
 import com.example.movies.domain.entities.Movie
 import com.example.movies.domain.entities.MovieDetail
@@ -17,7 +17,7 @@ class MoviesRepositoryImpl(
     private val moviesLocalDataSource: MoviesLocalDataSource,
     private val movieDTOMapper: MovieDTOMapper,
     private val movieORMMapper: MovieORMMapper,
-    private val movieDetailMapper: MovieDetailMapper
+    private val movieDetailDTOMapper: MovieDetailDTOMapper
 ) : MoviesRepository {
     override suspend fun getListMovies(page: Int?): Response<List<Movie>> {
         return try {
@@ -38,7 +38,7 @@ class MoviesRepositoryImpl(
             val response = moviesRemoteDataSource.getDetailMovie(id)
             val body = response.body()
             if (body != null && response.isSuccessful) {
-                Response.Success(movieDetailMapper.mapFromEntity(body))
+                Response.Success(movieDetailDTOMapper.mapFromEntity(body))
             } else {
                 Response.Error("something went wrong")
             }

@@ -1,8 +1,8 @@
 package com.example.movies.data.datasource
 
 import com.example.movies.data.api.MoviesService
-import com.example.movies.data.entities.MovieDetailDto
-import com.example.movies.data.entities.MovieListDto
+import com.example.movies.data.entities.dto.MovieDetailDTO
+import com.example.movies.data.entities.dto.MovieListDTO
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -18,8 +18,8 @@ class MoviesRemoteDataSourceImplTest {
     private lateinit var moviesRemoteDataSourceImpl: MoviesRemoteDataSourceImpl
     private val mockMoviesServices: MoviesService = mockk(relaxed = true)
     private val apiKey = "test key"
-    private val mockMovieListDto :MovieListDto = mockk(relaxed = true)
-    private val mockMovieDetailDto :MovieDetailDto = mockk(relaxed = true)
+    private val mockMovieListDto : MovieListDTO = mockk(relaxed = true)
+    private val mockMovieDetailDto :MovieDetailDTO = mockk(relaxed = true)
 
     @Before
     fun setUp() {

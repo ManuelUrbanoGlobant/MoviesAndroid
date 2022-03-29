@@ -8,14 +8,14 @@ import com.example.movies.data.datasource.MoviesLocalDataSource
 import com.example.movies.data.datasource.MoviesLocalDataSourceImpl
 import com.example.movies.data.datasource.MoviesRemoteDataSource
 import com.example.movies.data.datasource.MoviesRemoteDataSourceImpl
+import com.example.movies.data.db.MovieDao
 import com.example.movies.data.db.MovieDatabase
-import com.example.movies.data.mappers.MovieDetailMapper
+import com.example.movies.data.mappers.MovieDetailDTOMapper
 import com.example.movies.data.mappers.MovieDTOMapper
 import com.example.movies.data.mappers.MovieORMMapper
 import com.example.movies.data.repositories.MoviesRepositoryImpl
 import com.example.movies.domain.repositories.MoviesRepository
-import com.example.movies.domain.usecases.GetDetailMovieUseCase
-import com.example.movies.domain.usecases.GetDetailMovieUseCaseImpl
+import com.example.movies.domain.usecases.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,15 +30,18 @@ object MoviesModule {
 
     @Singleton
     @Provides
-    fun provideMoviesService(retrofit: Retrofit): MoviesService = retrofit.create(MoviesService::class.java)
+    fun provideMoviesService(retrofit: Retrofit): MoviesService =
+        retrofit.create(MoviesService::class.java)
 
     @Singleton
     @Provides
-    fun provideMovieDatabase(@ApplicationContext context: Context) : MovieDatabase = Room.databaseBuilder(context,)
+    fun provideMovieDatabase(@ApplicationContext context: Context): MovieDatabase =
+        Room.databaseBuilder(context, MovieDatabase::class.java, "movies").build()
 
     @Singleton
     @Provides
-    fun provideMovieDao()
+    fun provideMovieDao(movieDatabase: MovieDatabase): MovieDao = movieDatabase.movieDao()
+
 
     @Singleton
     @Provides
@@ -47,8 +50,8 @@ object MoviesModule {
 
     @Singleton
     @Provides
-    fun provideMoviesLocalDataSource(moviesService: MoviesService): MoviesLocalDataSource =
-        MoviesLocalDataSourceImpl()
+    fun provideMoviesLocalDataSource(movieDao: MovieDao): MoviesLocalDataSource =
+        MoviesLocalDataSourceImpl(movieDao)
 
     @Singleton
     @Provides
@@ -60,20 +63,37 @@ object MoviesModule {
 
     @Singleton
     @Provides
-    fun provideMovieDetailMapper(): MovieDetailMapper = MovieDetailMapper()
+    fun provideMovieDetailMapper(): MovieDetailDTOMapper = MovieDetailDTOMapper()
 
     @Singleton
     @Provides
     fun providesMoviesRepository(
         moviesRemoteDataSource: MoviesRemoteDataSource,
+        moviesLocalDataSource: MoviesLocalDataSource,
         movieDTOMapper: MovieDTOMapper,
-        movieDetailMapper: MovieDetailMapper
+        movieORMMapper: MovieORMMapper,
+        movieDetailDTOMapper: MovieDetailDTOMapper
     ): MoviesRepository = MoviesRepositoryImpl(
         moviesRemoteDataSource,
+        moviesLocalDataSource,
         movieDTOMapper,
-        movieDetailMapper
+        movieORMMapper,
+        movieDetailDTOMapper
     )
 
     @Provides
-    fun provideGetDetailMovieUseCase(repository: MoviesRepository): GetDetailMovieUseCase = GetDetailMovieUseCaseImpl(repository)
+    fun provideGetDetailMovieUseCase(repository: MoviesRepository): GetDetailMovieUseCase =
+        GetDetailMovieUseCaseImpl(repository)
+
+    @Provides
+    fun provideSaveMovieToFavouritesUseCase(repository: MoviesRepository): SaveMovieToFavouritesUseCase =
+        SaveMovieToFavouritesUseCaseImpl(repository)
+
+    @Provides
+    fun provideDeleteMovieFromFavouritesUseCase(repository: MoviesRepository): DeleteMovieFromFavouritesUseCase =
+        DeleteMovieFromFavouritesUseCaseImpl(repository)
+
+    @Provides
+    fun provideGetFavouritesMoviesUseCase(repository: MoviesRepository): GetFavouritesMoviesUseCase =
+        GetFavouritesMoviesUseCaseImpl(repository)
 }

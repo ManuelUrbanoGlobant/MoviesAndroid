@@ -67,8 +67,8 @@ dependencies {
     implementation(project(":movies:domain"))
 
     //Room
-    implementation(Dependencies.Room.room)
-    kapt(Dependencies.Room.compiler)
-    implementation(Dependencies.Room.ktx)
+    implementation(Dependencies.Room.roomRuntime)
+    implementation(Dependencies.Room.roomKtx)
+    kapt(Dependencies.Room.roomCompiler)
 
 }
