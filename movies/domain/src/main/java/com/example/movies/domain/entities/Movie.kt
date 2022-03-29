@@ -5,7 +5,6 @@ data class Movie(
     val name: String,
     val date: String,
     val overview: String,
-    val director: String,
     val score: Double,
     val thumbnail: String
 )
