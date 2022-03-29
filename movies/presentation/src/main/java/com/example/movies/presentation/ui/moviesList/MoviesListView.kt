@@ -1,27 +1,20 @@
 package com.example.movies.presentation.ui.moviesList
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDirections
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-import coil.size.Scale
 import com.example.androidHelpers.compose.views.MovieLottieAnimation
 import com.example.movies.domain.entities.Movie
 import com.example.movies.presentation.R
@@ -34,113 +27,64 @@ fun MovieList(
     onNavigate: (NavDirections) -> Unit,
     viewModel: MoviesListViewModel
 ) {
-    val listState = rememberLazyListState()
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         if (isLoadingVisible) {
             MovieLottieAnimation()
         } else {
-            movieList?.let {
-                LazyColumn(state = listState) {
-                    itemsIndexed(items = movieList) { _, item ->
-                        if (item.id > 0) {
-                            Box(modifier = Modifier
-                                .clickable {
-                                    val navDirection =
-                                        MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailFragment(
-                                            movieId = item.id
-                                        )
-                                    onNavigate(navDirection)
-                                }
-                            ) {
-                                MovieItem(item)
-                            }
-                        } else if (item.id == 0) {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize(),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Column() {
-                                    CircularProgressIndicator()
-                                    Text(text = "Loading...")
-                                }
-                            }
-                        }
-                    }
-                }
-                listState.OnBottomReached(buffer = 1) {
-                    viewModel.getMoviesList()
-                }
-            }
+            ContentListMovies(movieList, onNavigate, viewModel)
         }
     }
 }
 
 @Composable
-fun MovieItem(movie: Movie?) {
-    Card(
-        modifier = Modifier
-            .padding(8.dp, 4.dp)
-            .fillMaxWidth()
-            .height(100.dp),
-        shape = RoundedCornerShape(8.dp),
-        elevation = 4.dp
-    )
-    {
-        Surface {
-            Row(
-                Modifier
-                    .padding(4.dp)
-                    .fillMaxSize()
-            ) {
-
-                Image(
-                    painter = rememberAsyncImagePainter(
-                        ImageRequest.Builder(LocalContext.current)
-                            .data(data = movie?.getCompleteUrlToDetails())
-                            .apply(block = fun ImageRequest.Builder.() {
-                                scale(Scale.FIT)
-                                placeholder(R.drawable.movie_placeholder)
-                            }).build()
-                    ),
-                    contentDescription = movie?.overview,
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .weight(0.2f)
-                )
-
-                Column(
-                    verticalArrangement = Arrangement.Center,
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .fillMaxHeight()
-                        .weight(0.8f)
-                ) {
-                    Text(
-                        text = movie?.name ?: "",
-                        style = MaterialTheme.typography.subtitle1,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = movie?.score.toString(),
-                        style = MaterialTheme.typography.caption,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier
-                            .background(
-                                Color.LightGray
-                            )
-                            .padding(4.dp)
-                    )
-                    Text(
-                        text = movie?.overview ?: "",
-                        style = MaterialTheme.typography.body1,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
-                    )
-
+fun ContentListMovies(
+    movieList: List<Movie>?,
+    onNavigate: (NavDirections) -> Unit,
+    viewModel: MoviesListViewModel
+) {
+    val listState = rememberLazyListState()
+    movieList?.let {
+        LazyColumn(state = listState) {
+            itemsIndexed(items = movieList) { _, item ->
+                if (item.id > 0) {
+                    BoxItem(item, onNavigate)
+                } else if (item.id == 0) {
+                    BoxItemLoading()
                 }
             }
         }
+        listState.OnBottomReached(buffer = 1) {
+            viewModel.getMoviesList()
+        }
+    }
+}
+
+@Composable
+fun BoxItemLoading() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Column {
+            CircularProgressIndicator()
+            Text(text = stringResource(id = R.string.loading))
+        }
+    }
+}
+
+@Composable
+fun BoxItem(item: Movie, onNavigate: (NavDirections) -> Unit) {
+    Box(modifier = Modifier
+        .clickable {
+            val navDirection =
+                MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailFragment(
+                    movieId = item.id
+                )
+            onNavigate(navDirection)
+        }
+    ) {
+        MovieItem(item)
     }
 }
 
@@ -149,7 +93,6 @@ fun LazyListState.OnBottomReached(
     buffer: Int = 0,
     loadMore: () -> Unit
 ) {
-
     require(buffer >= 0) { "buffer cannot be negative, but was $buffer" }
 
     val shouldLoadMore = remember {

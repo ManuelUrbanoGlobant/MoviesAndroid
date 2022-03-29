@@ -62,10 +62,7 @@ class MoviesListFragment : BaseFragment() {
                     when (uiState) {
                         is MoviesListUiState.Init -> isLoadingVisible.value = false
                         is MoviesListUiState.Loading -> isLoadingVisible.value = true
-                        is MoviesListUiState.GetMoviesList -> {
-                            setSuccessMoviesList(uiState)
-
-                        }
+                        is MoviesListUiState.GetMoviesList -> setSuccessMoviesList(uiState)
                         is MoviesListUiState.Error -> showError(uiState)
                     }
                 }

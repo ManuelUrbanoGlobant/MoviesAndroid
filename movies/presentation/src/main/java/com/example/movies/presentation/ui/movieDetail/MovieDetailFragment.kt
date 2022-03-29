@@ -26,13 +26,11 @@ import kotlinx.coroutines.launch
 class MovieDetailFragment : BaseFragment() {
 
     private val viewModel: MovieDetailViewModel by viewModels()
-    // TODO: Remove once we receive movie id from movie list
-    private val movieId = 632727
 
     var movieDetail: MutableState<MovieDetail?> = mutableStateOf(null)
     private var isLoadingVisible: MutableState<Boolean> = mutableStateOf(false)
 
-    val args: MovieDetailFragmentArgs by navArgs()
+    private val args: MovieDetailFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -84,9 +82,7 @@ class MovieDetailFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //TODO implement viewModel call using SafeArg Argument passed through NavigationController
-        //TODO ie:  viewModel.getDetailMovie( args.movieId )
-        viewModel.getDetailMovie(movieId)
+        viewModel.getDetailMovie(args.movieId)
     }
 
 }
