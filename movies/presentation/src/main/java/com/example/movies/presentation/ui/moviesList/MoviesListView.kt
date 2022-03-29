@@ -69,7 +69,7 @@ fun MovieList(
                     }
                 }
                 listState.OnBottomReached(buffer = 1) {
-                    viewModel.removeProgressItem()
+                    viewModel.getMoviesList()
                 }
             }
         }
@@ -99,7 +99,7 @@ fun MovieItem(movie: Movie?) {
                         ImageRequest.Builder(LocalContext.current)
                             .data(data = movie?.getCompleteUrlToDetails())
                             .apply(block = fun ImageRequest.Builder.() {
-                                scale(Scale.FILL)
+                                scale(Scale.FIT)
                                 placeholder(R.drawable.movie_placeholder)
                             }).build()
                     ),

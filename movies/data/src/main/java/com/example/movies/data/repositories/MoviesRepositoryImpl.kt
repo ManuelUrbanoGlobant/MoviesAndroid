@@ -4,8 +4,8 @@ import com.example.kotlinhelpers.Response
 import com.example.movies.data.datasource.MoviesRemoteDataSource
 import com.example.movies.data.mappers.MovieDetailMapper
 import com.example.movies.data.mappers.MovieMapper
-import com.example.movies.domain.entities.Movie
 import com.example.movies.domain.entities.MovieDetail
+import com.example.movies.domain.entities.MovieList
 import com.example.movies.domain.repositories.MoviesRepository
 
 class MoviesRepositoryImpl(
@@ -13,12 +13,12 @@ class MoviesRepositoryImpl(
     private val movieMapper: MovieMapper,
     private val movieDetailMapper: MovieDetailMapper
 ) : MoviesRepository {
-    override suspend fun getListMovies(page: Int?): Response<List<Movie>> {
+    override suspend fun getListMovies(page: Int?): Response<MovieList> {
         return try {
             val response = moviesRemoteDataSource.getListMovies(page ?: 1)
             val body = response.body()
             if (body != null && response.isSuccessful) {
-                Response.Success(movieMapper.fromEntityList(body.movies))
+                Response.Success(movieMapper.fromMovieDto(body))
             } else {
                 Response.Error("something went wrong")
             }
