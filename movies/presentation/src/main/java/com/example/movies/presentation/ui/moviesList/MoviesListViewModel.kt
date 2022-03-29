@@ -1,10 +1,10 @@
 package com.example.movies.presentation.ui.moviesList
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movies.domain.entities.Movie
+import com.example.movies.domain.usecases.moviesList.GetMoviesListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MoviesListViewModel @Inject constructor() : ViewModel() {
+class MoviesListViewModel @Inject constructor(private val moviesListUseCase : GetMoviesListUseCase) : ViewModel() {
 
     private val _uiState: MutableStateFlow<MoviesListUiState> =
         MutableStateFlow(MoviesListUiState.Init)

@@ -8,8 +8,10 @@ import com.example.movies.data.mappers.MovieDetailMapper
 import com.example.movies.data.mappers.MovieMapper
 import com.example.movies.data.repositories.MoviesRepositoryImpl
 import com.example.movies.domain.repositories.MoviesRepository
-import com.example.movies.domain.usecases.GetDetailMovieUseCase
-import com.example.movies.domain.usecases.GetDetailMovieUseCaseImpl
+import com.example.movies.domain.usecases.movieDetail.GetDetailMovieUseCase
+import com.example.movies.domain.usecases.movieDetail.GetDetailMovieUseCaseImpl
+import com.example.movies.domain.usecases.moviesList.GetMoviesListUseCase
+import com.example.movies.domain.usecases.moviesList.GetMoviesListUseCaseImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -52,4 +54,7 @@ object MoviesModule {
 
     @Provides
     fun provideGetDetailMovieUseCase(repository: MoviesRepository): GetDetailMovieUseCase = GetDetailMovieUseCaseImpl(repository)
+
+    @Provides
+    fun provideGetMoviesListUseCase(repository: MoviesRepository) : GetMoviesListUseCase = GetMoviesListUseCaseImpl(repository)
 }

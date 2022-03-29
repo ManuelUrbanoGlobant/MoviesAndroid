@@ -3,11 +3,9 @@ package com.example.movies.presentation.ui.movieDetail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kotlinhelpers.Response
-import com.example.movies.domain.usecases.GetDetailMovieUseCase
-import com.example.movies.domain.usecases.GetDetailMovieUseCaseImpl
+import com.example.movies.domain.usecases.movieDetail.GetDetailMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
