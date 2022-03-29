@@ -5,5 +5,5 @@ import com.example.movies.domain.entities.Movie
 import com.example.movies.domain.repositories.MoviesRepository
 
 class GetMoviesListUseCaseImpl(private val moviesRepository: MoviesRepository) : GetMoviesListUseCase {
-    override suspend fun invoke(): Response<List<Movie>> = moviesRepository.getListMovies(1)
+    override suspend fun invoke(page: Int): Response<List<Movie>> = moviesRepository.getListMovies(page)
 }

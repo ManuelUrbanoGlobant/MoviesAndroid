@@ -4,5 +4,5 @@ import com.example.kotlinhelpers.Response
 import com.example.movies.domain.entities.Movie
 
 interface GetMoviesListUseCase {
-    suspend fun invoke(): Response<List<Movie>>
+    suspend fun invoke(page: Int): Response<List<Movie>>
 }
