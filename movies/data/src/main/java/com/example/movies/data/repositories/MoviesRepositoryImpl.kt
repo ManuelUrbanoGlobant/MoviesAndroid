@@ -4,8 +4,10 @@ import com.example.kotlinhelpers.Response
 import com.example.movies.data.datasource.MoviesRemoteDataSource
 import com.example.movies.data.mappers.MovieDetailMapper
 import com.example.movies.data.mappers.MovieMapper
+import com.example.movies.data.mappers.toDomain
 import com.example.movies.domain.entities.Movie
 import com.example.movies.domain.entities.MovieDetail
+import com.example.movies.domain.entities.MovieRecommendationList
 import com.example.movies.domain.repositories.MoviesRepository
 
 class MoviesRepositoryImpl(
@@ -33,6 +35,20 @@ class MoviesRepositoryImpl(
             val body = response.body()
             if (body != null && response.isSuccessful) {
                 Response.Success(movieDetailMapper.mapFromEntity(body))
+            } else {
+                Response.Error("something went wrong")
+            }
+        } catch (error: Exception) {
+            Response.Error(error.message.toString())
+        }
+    }
+
+    override suspend fun getRecommendedMovies(id: Int, page: Int?): Response<MovieRecommendationList> {
+        return try {
+            val response = moviesRemoteDataSource.getRecommendationList(id, page ?: 1)
+            val body = response.body()
+            if (body != null && response.isSuccessful) {
+                Response.Success(body.toDomain())
             } else {
                 Response.Error("something went wrong")
             }

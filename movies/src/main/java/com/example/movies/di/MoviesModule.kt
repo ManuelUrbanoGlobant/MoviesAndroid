@@ -10,6 +10,8 @@ import com.example.movies.data.repositories.MoviesRepositoryImpl
 import com.example.movies.domain.repositories.MoviesRepository
 import com.example.movies.domain.usecases.GetDetailMovieUseCase
 import com.example.movies.domain.usecases.GetDetailMovieUseCaseImpl
+import com.example.movies.domain.usecases.GetMovieRecommendationsUseCase
+import com.example.movies.domain.usecases.GetMovieRecommendationsUseCaseImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -52,4 +54,7 @@ object MoviesModule {
 
     @Provides
     fun provideGetDetailMovieUseCase(repository: MoviesRepository): GetDetailMovieUseCase = GetDetailMovieUseCaseImpl(repository)
+
+    @Provides
+    fun provideGetDetailMovieRecommendationUseCase(repository: MoviesRepository): GetMovieRecommendationsUseCase = GetMovieRecommendationsUseCaseImpl(repository)
 }
