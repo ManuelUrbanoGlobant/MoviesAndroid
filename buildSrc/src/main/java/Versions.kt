@@ -14,6 +14,7 @@ object Versions {
         const val constraintlayout = "2.1.3"
         const val navigation = "2.4.1"
         const val lifecycleRuntime = "2.5.0-alpha05"
+        const val splashScreen = "1.0.0-beta01"
     }
 
     object Material {
@@ -33,6 +34,9 @@ object Versions {
 
     object Test {
         const val junit = "4.13.2"
+        const val mockk = "1.12.3"
+        const val coroutines = "1.6.0"
+        const val jupiter = "5.8.2"
     }
 
     object AndroidTest {

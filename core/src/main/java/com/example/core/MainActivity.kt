@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.example.androidHelpers.constants.PreferenceConstants
 import com.example.androidHelpers.preferences.StoreHelper
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     @Inject lateinit var storeHelper: StoreHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         reviewOnBoardingStatus()

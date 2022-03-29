@@ -13,9 +13,9 @@ class MoviesRepositoryImpl(
     private val movieMapper: MovieMapper,
     private val movieDetailMapper: MovieDetailMapper
 ) : MoviesRepository {
-    override suspend fun getListMovies(): Response<List<Movie>> {
+    override suspend fun getListMovies(page: Int?): Response<List<Movie>> {
         return try {
-            val response = moviesRemoteDataSource.getListMovies()
+            val response = moviesRemoteDataSource.getListMovies(page ?: 1)
             val body = response.body()
             if (body != null && response.isSuccessful) {
                 Response.Success(movieMapper.fromEntityList(body.movies))

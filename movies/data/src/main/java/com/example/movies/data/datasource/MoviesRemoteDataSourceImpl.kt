@@ -9,7 +9,9 @@ class MoviesRemoteDataSourceImpl(
     private val moviesService: MoviesService,
     private val apiKey: String
 ) : MoviesRemoteDataSource {
-    override suspend fun getListMovies(): Response<MovieListDto> = moviesService.getListMovies(apiKey)
+    override suspend fun getListMovies(page: Int): Response<MovieListDto> =
+        moviesService.getListMovies(apiKey, page)
 
-    override suspend fun getDetailMovie(id: Int): Response<MovieDetailDto> = moviesService.getMovieDetail(id)
+    override suspend fun getDetailMovie(id: Int): Response<MovieDetailDto> =
+        moviesService.getMovieDetail(id, apiKey)
 }
