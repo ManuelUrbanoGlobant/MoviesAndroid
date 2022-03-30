@@ -1,4 +1,4 @@
-package com.example.movies.presentation.ui.moviesList
+package com.example.movies.presentation.ui.mainList
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -23,9 +23,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MoviesListFragment : BaseFragment() {
+class MainListFragment : BaseFragment() {
 
-    private val viewModel: MoviesListViewModel by viewModels()
+    private val viewModel: MainListViewModel by viewModels()
 
     private var moviesList: MutableState<List<Movie>?> = mutableStateOf(null)
     private var isLoadingVisible: MutableState<Boolean> = mutableStateOf(false)
@@ -39,11 +39,15 @@ class MoviesListFragment : BaseFragment() {
             setContent {
                 InitializeStateVariables()
                 reviewChangeStatesUi()
-                MovieList(
+                HorizontalMovieList(
                     moviesList.value,
                     isLoadingVisible.value,
-                    onNavigate = { dest -> findNavController().navigate(dest) },
-                    viewModel
+                    onNavigate = { dest ->
+                        findNavController().navigate(dest)
+                    },
+                    onNavigateDetail = { dest ->
+                        findNavController().navigate(dest)
+                    },
                 )
             }
         }
@@ -63,7 +67,7 @@ class MoviesListFragment : BaseFragment() {
                     when (uiState) {
                         is BaseEvent.Init -> isLoadingVisible.value = false
                         is BaseEvent.Loading -> isLoadingVisible.value = true
-                        is MoviesListUiState.GetMoviesList -> setSuccessMoviesList(uiState)
+                        is MainListUiState.GetMainMoviesList -> setSuccessMoviesList(uiState)
                         is BaseEvent.Error -> showError(uiState)
                     }
                 }
@@ -71,7 +75,7 @@ class MoviesListFragment : BaseFragment() {
         }
     }
 
-    private fun setSuccessMoviesList(uiState: MoviesListUiState.GetMoviesList) {
+    private fun setSuccessMoviesList(uiState: MainListUiState.GetMainMoviesList) {
         moviesList.value = uiState.moviesList
         isLoadingVisible.value = false
     }

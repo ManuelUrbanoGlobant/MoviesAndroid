@@ -5,7 +5,8 @@
     <application>
         <activity
             android:name=".base.MovieActivity"
-            android:exported="true">
+            android:exported="true"
+            android:permission="">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -14,7 +15,7 @@
 
                 <data
                     android:host="com.example.movies"
-                    android:pathPrefix="/movies"
+                    android:pathPrefix="/main"
                     android:scheme="app" />
             </intent-filter>
         </activity>

@@ -17,6 +17,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.androidHelpers.extensions.showToast
+import com.example.kotlinhelpers.BaseEvent
 import com.example.movies.domain.entities.MovieDetail
 import com.example.movies.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -59,10 +60,10 @@ class MovieDetailFragment : BaseFragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
                     when (uiState) {
-                        is MovieDetailUiState.Init -> isLoadingVisible.value = false
-                        is MovieDetailUiState.Loading -> isLoadingVisible.value = true
+                        is BaseEvent.Init -> isLoadingVisible.value = false
+                        is BaseEvent.Loading -> isLoadingVisible.value = true
                         is MovieDetailUiState.GetDetailInformation -> setSuccessMovieDetail(uiState)
-                        is MovieDetailUiState.Error -> showError(uiState)
+                        is BaseEvent.Error -> showError(uiState)
                     }
                 }
             }
@@ -74,7 +75,7 @@ class MovieDetailFragment : BaseFragment() {
         isLoadingVisible.value = false
     }
 
-    private fun showError(uiState: MovieDetailUiState.Error) {
+    private fun showError(uiState: BaseEvent.Error) {
         requireContext().showToast(uiState.message)
         isLoadingVisible.value = false
         findNavController().popBackStack()
