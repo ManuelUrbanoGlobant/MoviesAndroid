@@ -1,5 +1,6 @@
 package com.example.movies.presentation.ui.moviedetail
 
+import com.example.kotlinhelpers.BaseEvent
 import com.example.kotlinhelpers.Response
 import com.example.movies.domain.entities.MovieDetail
 import com.example.movies.domain.usecases.movieDetail.GetDetailMovieUseCase
@@ -49,7 +50,7 @@ class MovieDetailViewModelTest {
     @Test
     fun shouldGetDetailSuccessResponse() {
         coEvery { getMovieDetailMovieUseCase.invoke(movieId) } returns Response.Success(movieDetail)
-        assertTrue(movieDetailViewModel.uiState.value is MovieDetailUiState.Init)
+        assertTrue(movieDetailViewModel.uiState.value is BaseEvent.Init)
 
         movieDetailViewModel.getDetailMovie(movieId)
 
@@ -59,10 +60,10 @@ class MovieDetailViewModelTest {
     @Test
     fun shouldGetDetailErrorResponse() {
         coEvery { getMovieDetailMovieUseCase.invoke(movieId) } returns Response.Error("Error")
-        assertTrue(movieDetailViewModel.uiState.value is MovieDetailUiState.Init)
+        assertTrue(movieDetailViewModel.uiState.value is BaseEvent.Init)
 
         movieDetailViewModel.getDetailMovie(movieId)
 
-        assertTrue(movieDetailViewModel.uiState.value is MovieDetailUiState.Error)
+        assertTrue(movieDetailViewModel.uiState.value is BaseEvent.Error)
     }
 }
