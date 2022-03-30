@@ -19,9 +19,9 @@ class MovieORMMapper : EntityMapper<MovieORM, Movie> {
         }
     }
 
-    fun fromEntityList(initial: List<MovieORM>): List<Movie> {
-        return initial.map { mapFromEntity(it) }
-    }
+    fun fromEntityList(initial: List<MovieORM>): List<Movie> =
+        initial.map { mapFromEntity(it) }
+
 
     override fun mapToEntity(domainModel: Movie): MovieORM {
         with(domainModel) {

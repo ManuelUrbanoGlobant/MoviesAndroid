@@ -19,8 +19,8 @@ class MovieDTOMapper : EntityMapper<MovieDTO, Movie> {
         }
     }
 
-    fun fromEntityList(initial: List<MovieDTO>): List<Movie>{
-        return initial.map { mapFromEntity(it) }
+    fun fromEntityList(initial: List<MovieDTO>): List<Movie> = initial.map {
+        mapFromEntity(it)
     }
 
     override fun mapToEntity(domainModel: Movie): MovieDTO {

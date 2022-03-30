@@ -1,11 +1,15 @@
 package com.example.movies.data.repositories
 
 import com.example.kotlinhelpers.Response
+import com.example.movies.data.datasource.MoviesLocalDataSource
 import com.example.movies.data.datasource.MoviesRemoteDataSource
 import com.example.movies.data.entities.dto.MovieDetailDTO
 import com.example.movies.data.entities.dto.MovieListDTO
+import com.example.movies.data.entities.orm.MovieORM
 import com.example.movies.data.mappers.MovieDTOMapper
 import com.example.movies.data.mappers.MovieDetailDTOMapper
+import com.example.movies.data.mappers.MovieORMMapper
+import com.example.movies.domain.entities.Movie
 import io.mockk.*
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
@@ -18,17 +22,26 @@ class MoviesRepositoryImplTest {
 
     private lateinit var moviesRepositoryImpl: MoviesRepositoryImpl
     private val mockMoviesRemoteDataSource: MoviesRemoteDataSource = mockk()
+    private val mockMoviesLocalDataSource: MoviesLocalDataSource = mockk()
     private val mockMovieMapper: MovieDTOMapper = mockk(relaxed = true)
     private val mockMovieDetailDTOMapper: MovieDetailDTOMapper = mockk(relaxed = true)
+    private val mockMovieORMMapper: MovieORMMapper = mockk(relaxed = true)
     private val mockMovieListDto: MovieListDTO = mockk(relaxed = true)
     private val mockMovieDetailDto: MovieDetailDTO = mockk(relaxed = true)
+    private val mockMovieORM: MovieORM = mockk(relaxed = true)
     private val movieId = 1
     private val pageNumber = 1
 
     @Before
     fun setUp() {
         moviesRepositoryImpl =
-            MoviesRepositoryImpl(mockMoviesRemoteDataSource, mockMovieMapper, mockMovieDetailDTOMapper)
+            MoviesRepositoryImpl(
+                mockMoviesRemoteDataSource,
+                mockMoviesLocalDataSource,
+                mockMovieMapper,
+                mockMovieORMMapper,
+                mockMovieDetailDTOMapper
+            )
     }
 
     @Test
@@ -65,7 +78,9 @@ class MoviesRepositoryImplTest {
     @Test
     fun shouldCatchCallGetListMoviesDataSource() = runBlocking {
         val messageException = "Invalid Test Exception"
-        coEvery { mockMoviesRemoteDataSource.getListMovies(pageNumber) } throws Exception(messageException)
+        coEvery { mockMoviesRemoteDataSource.getListMovies(pageNumber) } throws Exception(
+            messageException
+        )
 
         val response = moviesRepositoryImpl.getListMovies(pageNumber)
         assertEquals((response as Response.Error).message, messageException)
@@ -106,7 +121,9 @@ class MoviesRepositoryImplTest {
     @Test
     fun shouldCatchGetDetailMovie() = runBlocking {
         val messageException = "Invalid Test Exception"
-        coEvery { mockMoviesRemoteDataSource.getDetailMovie(movieId) } throws Exception(messageException)
+        coEvery { mockMoviesRemoteDataSource.getDetailMovie(movieId) } throws Exception(
+            messageException
+        )
 
         val response = moviesRepositoryImpl.getDetailMovie(movieId)
         assertEquals((response as Response.Error).message, messageException)
