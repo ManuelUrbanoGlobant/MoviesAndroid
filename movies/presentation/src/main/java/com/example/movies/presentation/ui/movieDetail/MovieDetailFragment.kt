@@ -17,6 +17,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.androidHelpers.extensions.showToast
 import com.example.movies.domain.entities.MovieDetail
+import com.example.movies.domain.entities.MovieRecommendation
 import com.example.movies.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -29,6 +30,7 @@ class MovieDetailFragment : BaseFragment() {
     private val movieId = 632727
 
     var movieDetail: MutableState<MovieDetail?> = mutableStateOf(null)
+    var movieRecommendations: MutableState<List<MovieRecommendation>?> = mutableStateOf(null)
     var isLoadingVisible: MutableState<Boolean> = mutableStateOf(false)
 
     override fun onCreateView(
@@ -40,7 +42,7 @@ class MovieDetailFragment : BaseFragment() {
             setContent {
                 InitializeStateVariables()
                 reviewChangeStatesUi()
-                DetailScreen(movieDetail.value, isLoadingVisible.value)
+                DetailScreen(movieDetail.value, movieRecommendations.value, isLoadingVisible.value)
             }
         }
     }
@@ -48,6 +50,7 @@ class MovieDetailFragment : BaseFragment() {
     @Composable
     private fun InitializeStateVariables() {
         movieDetail = remember { mutableStateOf(null) }
+        movieRecommendations = remember { mutableStateOf(null) }
         isLoadingVisible = remember { mutableStateOf(false) }
     }
 
@@ -60,6 +63,7 @@ class MovieDetailFragment : BaseFragment() {
                         is MovieDetailUiState.Init -> isLoadingVisible.value = false
                         is MovieDetailUiState.Loading -> isLoadingVisible.value = true
                         is MovieDetailUiState.GetDetailInformation -> setSuccessMovieDetail(uiState)
+                        is MovieDetailUiState.GetMovieRecommendations -> setSuccessMovieRecommendations(uiState)
                         is MovieDetailUiState.Error -> showError(uiState)
                     }
                 }
@@ -70,6 +74,10 @@ class MovieDetailFragment : BaseFragment() {
     private fun setSuccessMovieDetail(uiState: MovieDetailUiState.GetDetailInformation) {
         movieDetail.value = uiState.movieDetail
         isLoadingVisible.value = false
+    }
+
+    private fun setSuccessMovieRecommendations(uiState: MovieDetailUiState.GetMovieRecommendations) {
+        movieRecommendations.value = uiState.recommendations
     }
 
     private fun showError(uiState: MovieDetailUiState.Error) {

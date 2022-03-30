@@ -1,6 +1,5 @@
 package com.example.movies.presentation.ui.movieDetail
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kotlinhelpers.Response
@@ -30,7 +29,10 @@ class MovieDetailViewModel @Inject constructor(
             _uiState.emit(MovieDetailUiState.Loading)
 
             when (val response = movieRecommendationsUseCase.invoke(id, 1)) {
-                is Response.Success -> Log.e("MovieRecommendation", response.value.movies.toString())
+
+                is Response.Success -> {
+                    _uiState.emit(MovieDetailUiState.GetMovieRecommendations(response.value.movies))
+                }
                 is Response.Error -> _uiState.emit(MovieDetailUiState.Error(response.message))
             }
 

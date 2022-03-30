@@ -9,15 +9,17 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.androidHelpers.compose.views.MovieLottieAnimation
 import com.example.androidHelpers.compose.views.TextTitle
 import com.example.movies.domain.entities.MovieDetail
+import com.example.movies.domain.entities.MovieRecommendation
 import com.example.movies.presentation.R
 
 @Composable
-fun DetailScreen(movieDetail: MovieDetail?, isLoadingVisible: Boolean = false) {
+fun DetailScreen(movieDetail: MovieDetail?, movieRecommendations: List<MovieRecommendation>?, isLoadingVisible: Boolean = false) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Top) {
             AsyncImage(
@@ -33,6 +35,8 @@ fun DetailScreen(movieDetail: MovieDetail?, isLoadingVisible: Boolean = false) {
                     .height(dimensionResource(id = R.dimen.height_image_detail))
             )
             ContentDetail(movieDetail)
+            Spacer(modifier = Modifier.width(8.dp))
+            ContentRecommendation(movieRecommendations)
         }
 
         if (isLoadingVisible) {
@@ -41,12 +45,24 @@ fun DetailScreen(movieDetail: MovieDetail?, isLoadingVisible: Boolean = false) {
     }
 
 }
+@Composable
+private fun ContentRecommendation(recommendations: List<MovieRecommendation>?) {
+
+    Column(
+        modifier = Modifier
+            .wrapContentSize()
+            .padding(dimensionResource(id = R.dimen.padding_view_detail))
+    ) {
+        Text(text = "Recommended Movies")
+        Text(text = recommendations?.get(0)?.name ?: "")
+    }
+}
 
 @Composable
 private fun ContentDetail(movieDetail: MovieDetail?) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            .wrapContentSize()
             .padding(dimensionResource(id = R.dimen.padding_view_detail))
     ) {
         TextTitle(
@@ -77,7 +93,7 @@ private fun ContentDetail(movieDetail: MovieDetail?) {
 private fun getTimeFormat(movieDetail: MovieDetail?) =
     if (movieDetail?.time != null) "Time: ${movieDetail.time} Minutes" else ""
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun Preview() {
     val detail = MovieDetail(
@@ -89,5 +105,6 @@ private fun Preview() {
         score = 0.0,
         thumbnail = "/lrP1TQf3stZveNEyviUUcSh8HLA.jpg"
     )
-    DetailScreen(detail, false)
+
+    DetailScreen(detail, null)
 }
