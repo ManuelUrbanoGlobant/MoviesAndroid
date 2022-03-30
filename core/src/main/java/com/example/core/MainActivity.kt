@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.androidHelpers.constants.PreferenceConstants
 import com.example.androidHelpers.preferences.StoreHelper
 import com.example.core.onboarding.OnBoardingFragment
+import com.example.kotlinhelpers.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigateToMovies() {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("app://com.example.movies/movies"))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Constants.LIST_MOVIES_URI))
         startActivity(intent)
         finish()
     }

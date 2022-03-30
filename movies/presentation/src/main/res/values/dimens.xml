@@ -2,4 +2,6 @@
 <resources>
     <dimen name="height_image_detail">200dp</dimen>
     <dimen name="padding_view_detail">8dp</dimen>
+    <dimen name="size_8_DP">8dp</dimen>
+    <dimen name="size_4_DP">4dp</dimen>
 </resources>

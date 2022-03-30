@@ -1,4 +1,4 @@
-package com.example.movies.presentation.ui.movieDetail
+package com.example.movies.presentation.ui.moviesList
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -14,23 +14,20 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
+import androidx.navigation.findNavController
 import com.example.androidHelpers.extensions.showToast
-import com.example.movies.domain.entities.MovieDetail
+import com.example.movies.domain.entities.Movie
 import com.example.movies.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MovieDetailFragment : BaseFragment() {
+class MoviesListFragment : BaseFragment() {
 
-    private val viewModel: MovieDetailViewModel by viewModels()
+    private val viewModel: MoviesListViewModel by viewModels()
 
-    var movieDetail: MutableState<MovieDetail?> = mutableStateOf(null)
+    private var moviesList: MutableState<List<Movie>?> = mutableStateOf(null)
     private var isLoadingVisible: MutableState<Boolean> = mutableStateOf(false)
-
-    private val args: MovieDetailFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,15 +38,19 @@ class MovieDetailFragment : BaseFragment() {
             setContent {
                 InitializeStateVariables()
                 reviewChangeStatesUi()
-                DetailScreen(movieDetail.value, isLoadingVisible.value)
+                MovieList(
+                    moviesList.value,
+                    isLoadingVisible.value,
+                    onNavigate = { dest -> findNavController().navigate(dest) },
+                    viewModel
+                )
             }
         }
     }
 
-
     @Composable
     private fun InitializeStateVariables() {
-        movieDetail = remember { mutableStateOf(null) }
+        moviesList = remember { mutableStateOf(null) }
         isLoadingVisible = remember { mutableStateOf(false) }
     }
 
@@ -59,30 +60,23 @@ class MovieDetailFragment : BaseFragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
                     when (uiState) {
-                        is MovieDetailUiState.Init -> isLoadingVisible.value = false
-                        is MovieDetailUiState.Loading -> isLoadingVisible.value = true
-                        is MovieDetailUiState.GetDetailInformation -> setSuccessMovieDetail(uiState)
-                        is MovieDetailUiState.Error -> showError(uiState)
+                        is MoviesListUiState.Init -> isLoadingVisible.value = false
+                        is MoviesListUiState.Loading -> isLoadingVisible.value = true
+                        is MoviesListUiState.GetMoviesList -> setSuccessMoviesList(uiState)
+                        is MoviesListUiState.Error -> showError(uiState)
                     }
                 }
             }
         }
     }
 
-    private fun setSuccessMovieDetail(uiState: MovieDetailUiState.GetDetailInformation) {
-        movieDetail.value = uiState.movieDetail
+    private fun setSuccessMoviesList(uiState: MoviesListUiState.GetMoviesList) {
+        moviesList.value = uiState.moviesList
         isLoadingVisible.value = false
     }
 
-    private fun showError(uiState: MovieDetailUiState.Error) {
+    private fun showError(uiState: MoviesListUiState.Error) {
         requireContext().showToast(uiState.message)
         isLoadingVisible.value = false
-        findNavController().popBackStack()
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.getDetailMovie(args.movieId)
-    }
-
 }
