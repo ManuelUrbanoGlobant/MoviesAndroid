@@ -43,29 +43,29 @@ object MoviesModule {
     fun provideMovieDao(movieDatabase: MovieDatabase): MovieDao = movieDatabase.movieDao()
 
 
-    @Singleton
+
     @Provides
     fun provideMoviesRemoteDataSource(moviesService: MoviesService): MoviesRemoteDataSource =
         MoviesRemoteDataSourceImpl(moviesService, BuildConfig.API_KEY)
 
-    @Singleton
+
     @Provides
     fun provideMoviesLocalDataSource(movieDao: MovieDao): MoviesLocalDataSource =
         MoviesLocalDataSourceImpl(movieDao)
 
-    @Singleton
+
     @Provides
     fun provideMovieDTOMapper(): MovieDTOMapper = MovieDTOMapper()
 
-    @Singleton
+
     @Provides
     fun provideMovieORMMapper(): MovieORMMapper = MovieORMMapper()
 
-    @Singleton
+
     @Provides
     fun provideMovieDetailMapper(): MovieDetailDTOMapper = MovieDetailDTOMapper()
 
-    @Singleton
+
     @Provides
     fun providesMoviesRepository(
         moviesRemoteDataSource: MoviesRemoteDataSource,
