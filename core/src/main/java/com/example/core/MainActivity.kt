@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigateToMovies() {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Constants.LIST_MOVIES_URI))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Constants.MAIN_LIST_MOVIES_URI))
         startActivity(intent)
         finish()
     }

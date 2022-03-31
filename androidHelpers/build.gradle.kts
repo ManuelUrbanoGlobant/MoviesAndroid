@@ -66,6 +66,9 @@ dependencies {
     implementation(Dependencies.DataStore.preferences)
     implementation(Dependencies.DataStore.core)
 
+    //Coil
+    implementation(Dependencies.UI.coil)
+
     //Lottie
     implementation(Dependencies.UI.lottie)
 

@@ -10,3 +10,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun getTitleTextStyle() =
     TextStyle(fontSize = 18.sp, fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold, color = Color.Black)
+
+@Composable
+fun getHeaderTextStyle() =
+    TextStyle(fontSize = 20.sp, fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold, color = Color.Black)

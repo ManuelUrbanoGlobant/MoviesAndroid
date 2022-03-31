@@ -14,7 +14,7 @@
 
                 <data
                     android:host="com.example.movies"
-                    android:pathPrefix="/movies"
+                    android:pathPrefix="/main"
                     android:scheme="app" />
             </intent-filter>
         </activity>

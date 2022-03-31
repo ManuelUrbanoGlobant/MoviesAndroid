@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/moviesListFragment">
+    app:startDestination="@id/mainListFragment2">
 
     <fragment
         android:id="@+id/movieDetailFragment"
@@ -14,15 +14,30 @@
             app:uri="app://com.example.movies/moviedetail" />
         <argument
             android:name="movieId"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/moviesListFragment"
         android:name="com.example.movies.presentation.ui.moviesList.MoviesListFragment"
-        android:label="MoviesListFragment" >
+        android:label="MoviesListFragment">
         <action
             android:id="@+id/action_moviesListFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+        <deepLink
+            android:id="@+id/deepLink3"
+            app:action="MOVIE_LIST_ACTION"
+            app:uri="app://com.example.movies/movies" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainListFragment2"
+        android:name="com.example.movies.presentation.ui.mainList.MainListFragment"
+        android:label="MainListFragment">
+        <action
+            android:id="@+id/action_mainListFragment2_to_moviesListFragment"
+            app:destination="@id/moviesListFragment" />
+        <action
+            android:id="@+id/action_mainListFragment2_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment" />
     </fragment>
 

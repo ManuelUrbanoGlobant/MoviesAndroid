@@ -1,3 +1,6 @@
 <resources >
     <string name="loading">Loading…</string>
+    <string name="text_more">More…</string>
+    <string name="most_popular_section">Most Popular</string>
+    <string name="other_sections_soon">Other sections soon…</string>
 </resources>
