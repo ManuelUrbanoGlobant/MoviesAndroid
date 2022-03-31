@@ -65,4 +65,10 @@ dependencies {
 
     //Modules
     implementation(project(":movies:domain"))
+
+    //Room
+    implementation(Dependencies.Room.roomRuntime)
+    implementation(Dependencies.Room.roomKtx)
+    kapt(Dependencies.Room.roomCompiler)
+
 }

@@ -1,17 +1,17 @@
 package com.example.movies.data.datasource
 
 import com.example.movies.data.api.MoviesService
-import com.example.movies.data.entities.MovieDetailDto
-import com.example.movies.data.entities.MovieListDto
+import com.example.movies.data.entities.dto.MovieDetailDTO
+import com.example.movies.data.entities.dto.MovieListDTO
 import retrofit2.Response
 
 class MoviesRemoteDataSourceImpl(
     private val moviesService: MoviesService,
     private val apiKey: String
 ) : MoviesRemoteDataSource {
-    override suspend fun getListMovies(page: Int): Response<MovieListDto> =
+    override suspend fun getListMovies(page: Int): Response<MovieListDTO> =
         moviesService.getListMovies(apiKey, page)
 
-    override suspend fun getDetailMovie(id: Int): Response<MovieDetailDto> =
+    override suspend fun getDetailMovie(id: Int): Response<MovieDetailDTO> =
         moviesService.getMovieDetail(id, apiKey)
 }

@@ -20,4 +20,6 @@ dependencies {
     testImplementation(Dependencies.Test.coroutinesCore)
     testImplementation(Dependencies.Test.mockk)
 
+    // Coroutines
+    implementation(Dependencies.Test.coroutinesCore)
 }

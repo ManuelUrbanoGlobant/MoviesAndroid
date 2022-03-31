@@ -1,13 +1,13 @@
 package com.example.movies.data.mappers
 
-import com.example.movies.data.entities.MovieDto
-import com.example.movies.data.entities.MovieListDto
+import com.example.movies.data.entities.dto.MovieDTO
+import com.example.movies.data.entities.dto.MovieListDTO
 import com.example.movies.data.utils.EntityMapper
 import com.example.movies.domain.entities.Movie
 import com.example.movies.domain.entities.MovieList
 
-class MovieMapper : EntityMapper<MovieDto, Movie> {
-    override fun mapFromEntity(entity: MovieDto): Movie {
+class MovieDTOMapper : EntityMapper<MovieDTO, Movie> {
+    override fun mapFromEntity(entity: MovieDTO): Movie {
         with(entity) {
             return Movie(
                 id = id,
@@ -21,11 +21,24 @@ class MovieMapper : EntityMapper<MovieDto, Movie> {
         }
     }
 
-    private fun fromEntityList(initial: List<MovieDto>): List<Movie> {
-        return initial.map { mapFromEntity(it) }
+    fun fromEntityList(initial: List<MovieDTO>): List<Movie> = initial.map {
+        mapFromEntity(it)
     }
 
-    fun fromMovieDto(mld: MovieListDto): MovieList {
+    override fun mapToEntity(domainModel: Movie): MovieDTO {
+        with(domainModel) {
+            return MovieDTO(
+                id = id,
+                title = name,
+                releaseDate = date,
+                overview = overview,
+                voteAverage = score,
+                backdropPath = thumbnail ?: ""
+            )
+        }
+    }
+
+    fun fromMovieDto(mld: MovieListDTO): MovieList {
         with(mld) {
             return MovieList(
                 page = page,

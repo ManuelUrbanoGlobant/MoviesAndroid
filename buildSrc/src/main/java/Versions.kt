@@ -61,4 +61,8 @@ object Versions {
     object DataStore {
         const val datastore = "1.0.0"
     }
+
+    object Room {
+        const val room = "2.5.0-alpha01"
+    }
 }

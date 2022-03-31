@@ -61,6 +61,10 @@ dependencies {
     implementation(Dependencies.Hilt.hiltVersion)
     kapt(Dependencies.Hilt.hiltCompiler)
 
+    //Room
+    implementation(Dependencies.Room.roomRuntime)
+    kapt(Dependencies.Room.roomCompiler)
+
     //Test
     testImplementation(Dependencies.Test.junit)
 
