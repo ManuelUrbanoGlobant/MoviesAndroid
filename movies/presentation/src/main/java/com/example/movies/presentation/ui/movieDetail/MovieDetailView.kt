@@ -1,6 +1,9 @@
 package com.example.movies.presentation.ui.movieDetail
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -12,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.androidHelpers.compose.views.MovieHorizontalItem
 import com.example.androidHelpers.compose.views.MovieLottieAnimation
 import com.example.androidHelpers.compose.views.TextTitle
 import com.example.movies.domain.entities.MovieDetail
@@ -35,8 +39,8 @@ fun DetailScreen(movieDetail: MovieDetail?, movieRecommendations: List<MovieReco
                     .height(dimensionResource(id = R.dimen.height_image_detail))
             )
             ContentDetail(movieDetail)
-            Spacer(modifier = Modifier.width(8.dp))
-            ContentRecommendation(movieRecommendations)
+            Spacer(modifier = Modifier.width(16.dp))
+            ContentRecommendation(movieRecommendations, isLoadingVisible)
         }
 
         if (isLoadingVisible) {
@@ -46,15 +50,55 @@ fun DetailScreen(movieDetail: MovieDetail?, movieRecommendations: List<MovieReco
 
 }
 @Composable
-private fun ContentRecommendation(recommendations: List<MovieRecommendation>?) {
+private fun ContentRecommendation(recommendations: List<MovieRecommendation>?, isLoadingVisible: Boolean) {
+    if (!isLoadingVisible) {
+        Column(
+            modifier = Modifier
+                .wrapContentSize()
+                .padding(dimensionResource(id = R.dimen.padding_view_detail))
+        ) {
+            TextTitle(text = "Recommended Movies")
+            HorizontalMovieList(movieList = recommendations)
+        }
+    }
+}
 
-    Column(
-        modifier = Modifier
-            .wrapContentSize()
-            .padding(dimensionResource(id = R.dimen.padding_view_detail))
-    ) {
-        Text(text = "Recommended Movies")
-        Text(text = recommendations?.get(0)?.name ?: "")
+@Composable
+fun HorizontalMovieList(
+    movieList: List<MovieRecommendation>?,
+//    onNavigate: (NavDeepLinkRequest) -> Unit,
+//    onNavigateDetail: (NavDirections) -> Unit
+) {
+    Row {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+            ContentListMovies(movieList)
+        }
+    }
+}
+
+@Composable
+fun ContentListMovies(
+    movieList: List<MovieRecommendation>?,
+//    onNavigate: (NavDeepLinkRequest) -> Unit,
+//    onNavigateDetail: (NavDirections) -> Unit
+) {
+    LazyColumn {
+        item {
+            movieList?.let {
+                LazyRow {
+                    itemsIndexed(items = movieList) { _, movie ->
+//                        Box(Modifier.clickable {
+//                            val navDirection =
+//                                MainListFragmentDirections.actionMainListFragment2ToMovieDetailFragment(
+//                                    movieId = movie.id
+//                                )
+//                            onNavigateDetail(navDirection)
+//                        }) {
+                        MovieHorizontalItem(movie.getCompleteThumbnailUrl(), movie.name)
+                    }
+                }
+            }
+        }
     }
 }
 
