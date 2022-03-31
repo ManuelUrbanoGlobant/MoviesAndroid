@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.NavDirections
+import com.example.androidHelpers.compose.views.TextHeader
+import com.example.androidHelpers.compose.views.MovieHorizontalItem
 import com.example.androidHelpers.compose.views.MovieLottieAnimation
 import com.example.kotlinhelpers.Constants
 import com.example.movies.domain.entities.Movie
@@ -49,19 +51,24 @@ fun ContentListMovies(
     onNavigateDetail: (NavDirections) -> Unit
 ) {
     LazyColumn {
-        item { HeaderSection(title = stringResource(id = R.string.most_popular_section)) }
+        item {
+            TextHeader(
+                modifier = Modifier.padding(8.dp),
+                text = stringResource(id = R.string.most_popular_section)
+            )
+        }
         item {
             movieList?.let {
                 LazyRow {
-                    itemsIndexed(items = movieList) { _, item ->
+                    itemsIndexed(items = movieList) { _, movie ->
                         Box(Modifier.clickable {
                             val navDirection =
                                 MainListFragmentDirections.actionMainListFragment2ToMovieDetailFragment(
-                                    movieId = item.id
+                                    movieId = movie.id
                                 )
                             onNavigateDetail(navDirection)
                         }) {
-                            MovieHorizontalItem(item)
+                            MovieHorizontalItem(movie.getCompleteUrlToDetails(), movie.name)
                         }
                     }
                 }
@@ -73,28 +80,10 @@ fun ContentListMovies(
                 onNavigate = onNavigate
             )
         }
-        item { HeaderSection(title = stringResource(id = R.string.other_sections_soon)) }
-    }
-}
-
-@Composable
-fun HeaderSection(title: String) {
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        horizontalArrangement = Arrangement.Start
-    ) {
-        Box(
-            contentAlignment = Alignment.TopStart
-        ) {
-            Text(
-                text = title,
-                style = TextStyle(
-                    color = Color.Gray,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
+        item {
+            TextHeader(
+                modifier = Modifier.padding(8.dp),
+                text = stringResource(id = R.string.other_sections_soon)
             )
         }
     }

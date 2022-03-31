@@ -5,8 +5,7 @@
     <application>
         <activity
             android:name=".base.MovieActivity"
-            android:exported="true"
-            android:permission="">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

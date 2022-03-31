@@ -1,4 +1,4 @@
-package com.example.movies.presentation.ui.mainList
+package com.example.androidHelpers.compose.views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -12,14 +12,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
-import com.example.movies.domain.entities.Movie
+import com.example.androidhelpers.R
 
 @Composable
-fun MovieHorizontalItem(movie: Movie, modifier: Modifier = Modifier) {
+fun MovieHorizontalItem(thumbnailUrl: String, movieName : String, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .width(150.dp)
@@ -30,8 +31,8 @@ fun MovieHorizontalItem(movie: Movie, modifier: Modifier = Modifier) {
     ) {
         Box(modifier = Modifier.height(250.dp)) {
             Image(
-                painter = rememberAsyncImagePainter(movie.getCompleteUrlToDetails()),
-                contentDescription = movie.overview,
+                painter = rememberAsyncImagePainter(thumbnailUrl),
+                contentDescription = stringResource(R.string.movie_item_description),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
@@ -54,7 +55,7 @@ fun MovieHorizontalItem(movie: Movie, modifier: Modifier = Modifier) {
                     .padding(12.dp),
                 contentAlignment = Alignment.BottomStart
             ) {
-                Text(movie.name, style = TextStyle(color = Color.White, fontSize = 16.sp))
+                Text(movieName, style = TextStyle(color = Color.White, fontSize = 16.sp))
             }
         }
     }
