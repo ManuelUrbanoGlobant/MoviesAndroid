@@ -5,6 +5,14 @@ plugins {
     id(Dependencies.Plugins.hiltAndroidPlugin)
 }
 
+tasks.register("runUnitTests") {
+    dependsOn(":androidHelpers:test", ":app:test", ":core:test", ":kotlinHelpers:test",
+        ":movies:test", ":movies:data:test", ":movies:domain:test", ":movies:presentation:test",
+    )
+    group = "CI"
+    description = "$ ./gradlew runUnitTests # runs on GitHub Action"
+}
+
 android {
     compileSdk = Configuration.compileSDK
 

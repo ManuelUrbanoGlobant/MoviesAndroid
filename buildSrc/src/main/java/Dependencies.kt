@@ -7,6 +7,8 @@ object Dependencies {
         val javaLibrary by lazy { "java-library" }
         val kotlinKapt by lazy { "kotlin-kapt" }
         val hiltAndroidPlugin by lazy { "dagger.hilt.android.plugin" }
+        val safeArgsKotlin by lazy { "androidx.navigation.safeargs.kotlin" }
+
     }
 
     object AndroidX {

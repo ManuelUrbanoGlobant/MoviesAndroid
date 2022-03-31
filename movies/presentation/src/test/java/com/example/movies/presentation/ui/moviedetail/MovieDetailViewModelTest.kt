@@ -2,7 +2,7 @@ package com.example.movies.presentation.ui.moviedetail
 
 import com.example.kotlinhelpers.Response
 import com.example.movies.domain.entities.MovieDetail
-import com.example.movies.domain.usecases.GetDetailMovieUseCase
+import com.example.movies.domain.usecases.movieDetail.GetDetailMovieUseCase
 import com.example.movies.presentation.MainCoroutineRule
 import com.example.movies.presentation.ui.movieDetail.MovieDetailUiState
 import com.example.movies.presentation.ui.movieDetail.MovieDetailViewModel
