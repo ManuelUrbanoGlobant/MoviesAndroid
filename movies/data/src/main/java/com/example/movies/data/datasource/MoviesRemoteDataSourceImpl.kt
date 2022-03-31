@@ -1,11 +1,9 @@
 package com.example.movies.data.datasource
 
 import com.example.movies.data.api.MoviesService
+import com.example.movies.data.entities.MovieRecommendationListDto
 import com.example.movies.data.entities.dto.MovieDetailDTO
 import com.example.movies.data.entities.dto.MovieListDTO
-import com.example.movies.data.entities.MovieDetailDto
-import com.example.movies.data.entities.MovieListDto
-import com.example.movies.data.entities.MovieRecommendationListDto
 import retrofit2.Response
 
 class MoviesRemoteDataSourceImpl(

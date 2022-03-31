@@ -10,15 +10,11 @@ import com.example.movies.data.datasource.MoviesRemoteDataSource
 import com.example.movies.data.datasource.MoviesRemoteDataSourceImpl
 import com.example.movies.data.db.MovieDao
 import com.example.movies.data.db.MovieDatabase
-import com.example.movies.data.mappers.MovieDetailDTOMapper
 import com.example.movies.data.mappers.MovieDTOMapper
+import com.example.movies.data.mappers.MovieDetailDTOMapper
 import com.example.movies.data.mappers.MovieORMMapper
 import com.example.movies.data.repositories.MoviesRepositoryImpl
 import com.example.movies.domain.repositories.MoviesRepository
-import com.example.movies.domain.usecases.GetDetailMovieUseCase
-import com.example.movies.domain.usecases.GetDetailMovieUseCaseImpl
-import com.example.movies.domain.usecases.GetMovieRecommendationsUseCase
-import com.example.movies.domain.usecases.GetMovieRecommendationsUseCaseImpl
 import com.example.movies.domain.usecases.*
 import com.example.movies.domain.usecases.movieDetail.GetDetailMovieUseCase
 import com.example.movies.domain.usecases.movieDetail.GetDetailMovieUseCaseImpl

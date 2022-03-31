@@ -6,8 +6,6 @@ import com.example.movies.data.datasource.MoviesRemoteDataSource
 import com.example.movies.data.mappers.MovieDTOMapper
 import com.example.movies.data.mappers.MovieDetailDTOMapper
 import com.example.movies.data.mappers.MovieORMMapper
-import com.example.movies.data.mappers.MovieDetailMapper
-import com.example.movies.data.mappers.MovieMapper
 import com.example.movies.data.mappers.toDomain
 import com.example.movies.domain.entities.Movie
 import com.example.movies.domain.entities.MovieDetail
