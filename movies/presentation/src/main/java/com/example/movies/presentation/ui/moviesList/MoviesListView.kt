@@ -47,7 +47,9 @@ fun ContentListMovies(
         LazyColumn(state = listState) {
             itemsIndexed(items = movieList) { _, item ->
                 if (item.id > 0) {
-                    BoxItem(item, onNavigate)
+                    BoxItem(item, onNavigate, onClickFavorite = {
+                        viewModel.changeStateFavorite(it, item)
+                    })
                 } else if (item.id == 0) {
                     BoxItemLoading()
                 }
@@ -74,7 +76,7 @@ fun BoxItemLoading() {
 }
 
 @Composable
-fun BoxItem(item: Movie, onNavigate: (NavDirections) -> Unit) {
+fun BoxItem(item: Movie, onNavigate: (NavDirections) -> Unit, onClickFavorite: (Boolean) -> Unit) {
     Box(modifier = Modifier
         .clickable {
             val navDirection =
@@ -84,7 +86,7 @@ fun BoxItem(item: Movie, onNavigate: (NavDirections) -> Unit) {
             onNavigate(navDirection)
         }
     ) {
-        MovieItem(item)
+        MovieItem(item, onClickFavorite = onClickFavorite)
     }
 }
 

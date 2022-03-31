@@ -1,4 +1,4 @@
-package com.example.movies.domain.usecases
+package com.example.movies.domain.usecases.favorites
 
 import com.example.kotlinhelpers.Response
 import com.example.movies.domain.entities.Movie

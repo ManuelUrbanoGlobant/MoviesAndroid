@@ -5,10 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kotlinhelpers.Response
 import com.example.movies.domain.entities.Movie
+import com.example.movies.domain.usecases.favorites.DeleteMovieFromFavouritesUseCase
+import com.example.movies.domain.usecases.favorites.GetFavouritesMoviesUseCase
+import com.example.movies.domain.usecases.favorites.SaveMovieToFavouritesUseCase
 import com.example.movies.domain.usecases.moviesList.GetMoviesListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -17,6 +19,9 @@ import javax.inject.Inject
 @HiltViewModel
 class MoviesListViewModel @Inject constructor(
     private val moviesListUseCase: GetMoviesListUseCase,
+    private val getFavoriteUseCae: GetFavouritesMoviesUseCase,
+    private val saveMovieToFavouritesUseCase: SaveMovieToFavouritesUseCase,
+    private val deleteMovieFromFavouritesUseCase: DeleteMovieFromFavouritesUseCase,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
@@ -25,22 +30,27 @@ class MoviesListViewModel @Inject constructor(
 
     val uiState: StateFlow<MoviesListUiState> = _uiState
     private val movieList = mutableStateListOf<Movie>()
+    private var favoritesMovies: List<Movie> = emptyList()
     private var nextPage = 1
-    var maxPage = 3
+    private var maxPage = 3
 
     init {
-        getMoviesList()
+        getFavorites()
     }
 
     fun getMoviesList() {
         viewModelScope.launch(dispatcher) {
             if (nextPage == 1) _uiState.emit(MoviesListUiState.Loading)
-            delay(500)
-            movieList.remove(Movie())
+
+            movieList.removeIf { it.id == 0 }
             when (val response = moviesListUseCase.invoke(nextPage)) {
                 is Response.Success -> {
                     maxPage = response.value.totalPages
-                    movieList.addAll(response.value.movies)
+                    val movies = response.value.movies.map { movie ->
+                        movie.isFavorite = favoritesMovies.firstOrNull { it.id == movie.id } != null
+                        return@map movie
+                    }
+                    movieList.addAll(movies)
                     movieList.add(Movie())
                     _uiState.emit(MoviesListUiState.GetMoviesList(movieList))
                 }
@@ -49,5 +59,30 @@ class MoviesListViewModel @Inject constructor(
             nextPage++
         }
     }
+
+    private fun getFavorites() {
+        viewModelScope.launch(dispatcher) {
+            when (val response = getFavoriteUseCae.invoke()) {
+                is Response.Success -> {
+                    response.value.collect {
+                        favoritesMovies = it
+                        getMoviesList()
+                    }
+                }
+                is Response.Error -> _uiState.emit(MoviesListUiState.Error(response.message))
+            }
+            _uiState.emit(MoviesListUiState.GetMoviesList(movieList))
+        }
+    }
+
+
+    fun changeStateFavorite(isFavorite: Boolean, movie: Movie) {
+        viewModelScope.launch(dispatcher) {
+            movie.isFavorite = isFavorite
+            if (isFavorite) saveMovieToFavouritesUseCase.invoke(movie = movie)
+            else deleteMovieFromFavouritesUseCase.invoke(movie.id)
+        }
+    }
+
 
 }
