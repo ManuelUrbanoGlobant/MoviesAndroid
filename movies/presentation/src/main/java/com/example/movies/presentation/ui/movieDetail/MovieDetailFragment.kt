@@ -46,7 +46,6 @@ class MovieDetailFragment : BaseFragment() {
         }
     }
 
-
     @Composable
     private fun InitializeStateVariables() {
         movieDetail = remember { mutableStateOf(null) }

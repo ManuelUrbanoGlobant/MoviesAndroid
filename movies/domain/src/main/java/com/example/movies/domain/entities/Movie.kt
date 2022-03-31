@@ -7,7 +7,8 @@ data class Movie(
     val overview: String = "",
     val director: String = "",
     val score: Double = 0.0,
-    val thumbnail: String? = ""
+    val thumbnail: String? = "",
+    var isFavorite: Boolean = false
 ) {
     fun getCompleteUrlToDetails() = "https://image.tmdb.org/t/p/original$thumbnail"
 }

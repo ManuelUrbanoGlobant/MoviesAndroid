@@ -15,6 +15,6 @@ interface MoviesService {
         @Query("page") page: Int
     ): Response<MovieListDTO>
 
-    @GET("/movie/{id}")
+    @GET("movie/{id}")
     suspend fun getMovieDetail(@Path("id") id: Int, @Query("api_key") api_key: String): Response<MovieDetailDTO>
 }

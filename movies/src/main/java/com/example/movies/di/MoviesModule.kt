@@ -15,7 +15,7 @@ import com.example.movies.data.mappers.MovieDTOMapper
 import com.example.movies.data.mappers.MovieORMMapper
 import com.example.movies.data.repositories.MoviesRepositoryImpl
 import com.example.movies.domain.repositories.MoviesRepository
-import com.example.movies.domain.usecases.*
+import com.example.movies.domain.usecases.favorites.*
 import com.example.movies.domain.usecases.movieDetail.GetDetailMovieUseCase
 import com.example.movies.domain.usecases.movieDetail.GetDetailMovieUseCaseImpl
 import com.example.movies.domain.usecases.moviesList.GetMoviesListUseCase
