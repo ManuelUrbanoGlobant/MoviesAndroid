@@ -1,5 +1,6 @@
 package com.example.movies.presentation.ui.movieDetail
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -13,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavDirections
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.androidHelpers.compose.views.MovieHorizontalItem
@@ -23,7 +25,12 @@ import com.example.movies.domain.entities.MovieRecommendation
 import com.example.movies.presentation.R
 
 @Composable
-fun DetailScreen(movieDetail: MovieDetail?, movieRecommendations: List<MovieRecommendation>?, isLoadingVisible: Boolean = false) {
+fun DetailScreen(
+    movieDetail: MovieDetail?,
+    movieRecommendations: List<MovieRecommendation>?,
+    isLoadingVisible: Boolean = false,
+    onNavigateDetail: (NavDirections) -> Unit = {}
+) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Top) {
             AsyncImage(
@@ -40,7 +47,7 @@ fun DetailScreen(movieDetail: MovieDetail?, movieRecommendations: List<MovieReco
             )
             ContentDetail(movieDetail)
             Spacer(modifier = Modifier.width(16.dp))
-            ContentRecommendation(movieRecommendations, isLoadingVisible)
+            ContentRecommendation(movieRecommendations, isLoadingVisible, onNavigateDetail)
         }
 
         if (isLoadingVisible) {
@@ -50,7 +57,11 @@ fun DetailScreen(movieDetail: MovieDetail?, movieRecommendations: List<MovieReco
 
 }
 @Composable
-private fun ContentRecommendation(recommendations: List<MovieRecommendation>?, isLoadingVisible: Boolean) {
+private fun ContentRecommendation(
+    recommendations: List<MovieRecommendation>?,
+    isLoadingVisible: Boolean,
+    onNavigateDetail: (NavDirections) -> Unit
+) {
     if (!isLoadingVisible) {
         Column(
             modifier = Modifier
@@ -58,7 +69,7 @@ private fun ContentRecommendation(recommendations: List<MovieRecommendation>?, i
                 .padding(dimensionResource(id = R.dimen.padding_view_detail))
         ) {
             TextTitle(text = "Recommended Movies")
-            HorizontalMovieList(movieList = recommendations)
+            HorizontalMovieList(movieList = recommendations, onNavigateDetail)
         }
     }
 }
@@ -66,12 +77,11 @@ private fun ContentRecommendation(recommendations: List<MovieRecommendation>?, i
 @Composable
 fun HorizontalMovieList(
     movieList: List<MovieRecommendation>?,
-//    onNavigate: (NavDeepLinkRequest) -> Unit,
-//    onNavigateDetail: (NavDirections) -> Unit
+    onNavigateDetail: (NavDirections) -> Unit,
 ) {
     Row {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
-            ContentListMovies(movieList)
+            ContentListMovies(movieList, onNavigateDetail)
         }
     }
 }
@@ -79,22 +89,22 @@ fun HorizontalMovieList(
 @Composable
 fun ContentListMovies(
     movieList: List<MovieRecommendation>?,
-//    onNavigate: (NavDeepLinkRequest) -> Unit,
-//    onNavigateDetail: (NavDirections) -> Unit
+    onNavigateDetail: (NavDirections) -> Unit,
 ) {
     LazyColumn {
         item {
             movieList?.let {
                 LazyRow {
                     itemsIndexed(items = movieList) { _, movie ->
-//                        Box(Modifier.clickable {
-//                            val navDirection =
-//                                MainListFragmentDirections.actionMainListFragment2ToMovieDetailFragment(
-//                                    movieId = movie.id
-//                                )
-//                            onNavigateDetail(navDirection)
-//                        }) {
-                        MovieHorizontalItem(movie.getCompleteThumbnailUrl(), movie.name)
+                        Box(Modifier.clickable {
+                            val navDirection =
+                                MovieDetailFragmentDirections.toDetailScreen(
+                                    movieId = movie.id
+                                )
+                            onNavigateDetail(navDirection)
+                        }) {
+                            MovieHorizontalItem(movie.getCompleteThumbnailUrl(), movie.name)
+                        }
                     }
                 }
             }
@@ -150,5 +160,5 @@ private fun Preview() {
         thumbnail = "/lrP1TQf3stZveNEyviUUcSh8HLA.jpg"
     )
 
-    DetailScreen(detail, null)
+    DetailScreen(detail, movieRecommendations = emptyList())
 }

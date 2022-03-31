@@ -42,7 +42,6 @@ class MoviesListViewModel @Inject constructor(
         viewModelScope.launch(dispatcher) {
             if (nextPage == 1) _uiState.emit(MoviesListUiState.Loading)
 
-            movieList.removeIf { it.id == 0 }
             when (val response = moviesListUseCase.invoke(nextPage)) {
                 is Response.Success -> {
                     maxPage = response.value.totalPages

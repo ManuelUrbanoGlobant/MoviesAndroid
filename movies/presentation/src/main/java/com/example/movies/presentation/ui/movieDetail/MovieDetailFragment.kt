@@ -28,9 +28,9 @@ class MovieDetailFragment : BaseFragment() {
 
     private val viewModel: MovieDetailViewModel by viewModels()
 
-    var movieDetail: MutableState<MovieDetail?> = mutableStateOf(null)
+    private var movieDetail: MutableState<MovieDetail?> = mutableStateOf(null)
     private var isLoadingVisible: MutableState<Boolean> = mutableStateOf(false)
-    var movieRecommendations: MutableState<List<MovieRecommendation>?> = mutableStateOf(null)
+    private var movieRecommendations: MutableState<List<MovieRecommendation>?> = mutableStateOf(null)
     private val args: MovieDetailFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -42,7 +42,10 @@ class MovieDetailFragment : BaseFragment() {
             setContent {
                 InitializeStateVariables()
                 reviewChangeStatesUi()
-                DetailScreen(movieDetail.value, movieRecommendations.value, isLoadingVisible.value)
+                DetailScreen(
+                    movieDetail.value, movieRecommendations.value, isLoadingVisible.value,
+                    onNavigateDetail = { dest -> findNavController().navigate(dest) },
+                )
             }
         }
     }
