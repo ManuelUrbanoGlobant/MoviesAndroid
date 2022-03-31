@@ -15,6 +15,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.androidHelpers.extensions.showToast
 import com.example.movies.domain.entities.MovieDetail
 import com.example.movies.domain.entities.MovieRecommendation
@@ -26,12 +27,11 @@ import kotlinx.coroutines.launch
 class MovieDetailFragment : BaseFragment() {
 
     private val viewModel: MovieDetailViewModel by viewModels()
-    // TODO: Remove once we receive movie id from movie list
-    private val movieId = 632727
 
     var movieDetail: MutableState<MovieDetail?> = mutableStateOf(null)
+    private var isLoadingVisible: MutableState<Boolean> = mutableStateOf(false)
     var movieRecommendations: MutableState<List<MovieRecommendation>?> = mutableStateOf(null)
-    var isLoadingVisible: MutableState<Boolean> = mutableStateOf(false)
+    private val args: MovieDetailFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -88,7 +88,7 @@ class MovieDetailFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getDetailMovie(movieId)
+        viewModel.getDetailMovie(args.movieId)
     }
 
 }

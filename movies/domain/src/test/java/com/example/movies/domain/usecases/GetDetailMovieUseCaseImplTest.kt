@@ -3,6 +3,7 @@ package com.example.movies.domain.usecases
 import com.example.kotlinhelpers.Response
 import com.example.movies.domain.entities.MovieDetail
 import com.example.movies.domain.repositories.MoviesRepository
+import com.example.movies.domain.usecases.movieDetail.GetDetailMovieUseCaseImpl
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

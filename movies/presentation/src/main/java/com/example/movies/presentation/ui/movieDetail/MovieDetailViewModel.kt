@@ -3,6 +3,7 @@ package com.example.movies.presentation.ui.movieDetail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kotlinhelpers.Response
+import com.example.movies.domain.usecases.movieDetail.GetDetailMovieUseCase
 import com.example.movies.domain.usecases.GetDetailMovieUseCase
 import com.example.movies.domain.usecases.GetMovieRecommendationsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,7 +30,6 @@ class MovieDetailViewModel @Inject constructor(
             _uiState.emit(MovieDetailUiState.Loading)
 
             when (val response = movieRecommendationsUseCase.invoke(id, 1)) {
-
                 is Response.Success -> {
                     _uiState.emit(MovieDetailUiState.GetMovieRecommendations(response.value.movies))
                 }

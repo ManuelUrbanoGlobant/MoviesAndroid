@@ -22,6 +22,7 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:7.0.4")
         classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.Plugins.hiltAndroid}")
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.Plugins.safeArgsKotlin}")
     }
 }
 

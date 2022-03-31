@@ -7,6 +7,8 @@ object Dependencies {
         val javaLibrary by lazy { "java-library" }
         val kotlinKapt by lazy { "kotlin-kapt" }
         val hiltAndroidPlugin by lazy { "dagger.hilt.android.plugin" }
+        val safeArgsKotlin by lazy { "androidx.navigation.safeargs.kotlin" }
+
     }
 
     object AndroidX {
@@ -67,6 +69,12 @@ object Dependencies {
     object DataStore {
         val preferences by lazy { "androidx.datastore:datastore-preferences:${Versions.DataStore.datastore}" }
         val core by lazy { "androidx.datastore:datastore-preferences-core:${Versions.DataStore.datastore}" }
+    }
+
+    object Room {
+        val roomRuntime by lazy { "androidx.room:room-runtime:${Versions.Room.room}" }
+        val roomCompiler by lazy { "androidx.room:room-compiler:${Versions.Room.room}" }
+        val roomKtx by lazy { "androidx.room:room-ktx:${Versions.Room.room}" }
     }
 
 }

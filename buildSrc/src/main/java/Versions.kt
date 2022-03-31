@@ -5,6 +5,7 @@ object Versions {
         const val kotlinAndroid = "1.6.10"
         const val kotlinJvm = "1.6.10"
         const val hiltAndroid = "2.41"
+        const val safeArgsKotlin = "2.4.1"
     }
 
     object AndroidX {
@@ -59,5 +60,9 @@ object Versions {
 
     object DataStore {
         const val datastore = "1.0.0"
+    }
+
+    object Room {
+        const val room = "2.5.0-alpha01"
     }
 }

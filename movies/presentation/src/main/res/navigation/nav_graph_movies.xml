@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/movieDetailFragment">
+    app:startDestination="@id/moviesListFragment">
 
     <fragment
         android:id="@+id/movieDetailFragment"
         android:name="com.example.movies.presentation.ui.movieDetail.MovieDetailFragment"
-        android:label="MovieDetailFragment" />
+        android:label="MovieDetailFragment">
+        <deepLink
+            android:id="@+id/deepLink"
+            app:action="MOVIE_DETAIL_ACTION"
+            app:uri="app://com.example.movies/moviedetail" />
+        <argument
+            android:name="movieId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
+    <fragment
+        android:id="@+id/moviesListFragment"
+        android:name="com.example.movies.presentation.ui.moviesList.MoviesListFragment"
+        android:label="MoviesListFragment" >
+        <action
+            android:id="@+id/action_moviesListFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
 
 </navigation>
