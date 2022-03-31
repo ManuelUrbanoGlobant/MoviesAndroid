@@ -1,6 +1,7 @@
 package com.example.movies.domain.repositories
 
 import com.example.kotlinhelpers.Response
+import com.example.movies.domain.entities.Movie
 import com.example.movies.domain.entities.MovieDetail
 import kotlinx.coroutines.flow.Flow
 import com.example.movies.domain.entities.MovieList

@@ -20,5 +20,6 @@ dependencies {
     testImplementation(Dependencies.Test.coroutinesCore)
     testImplementation(Dependencies.Test.mockk)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+    // Coroutines
+    implementation(Dependencies.Test.coroutinesCore)
 }
