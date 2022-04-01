@@ -6,9 +6,11 @@ import com.example.movies.data.datasource.MoviesRemoteDataSource
 import com.example.movies.data.mappers.MovieDTOMapper
 import com.example.movies.data.mappers.MovieDetailDTOMapper
 import com.example.movies.data.mappers.MovieORMMapper
+import com.example.movies.data.mappers.toDomain
 import com.example.movies.domain.entities.Movie
 import com.example.movies.domain.entities.MovieDetail
 import com.example.movies.domain.entities.MovieList
+import com.example.movies.domain.entities.MovieRecommendationList
 import com.example.movies.domain.repositories.MoviesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -72,6 +74,20 @@ class MoviesRepositoryImpl(
                 movieORMMapper.fromEntityList(it)
             }
             Response.Success(response)
+        } catch (error: Exception) {
+            Response.Error(error.message.toString())
+        }
+    }
+
+    override suspend fun getRecommendedMovies(id: Int, page: Int): Response<MovieRecommendationList> {
+        return try {
+            val response = moviesRemoteDataSource.getRecommendationList(id, page)
+            val body = response.body()
+            if (body != null && response.isSuccessful) {
+                Response.Success(body.toDomain())
+            } else {
+                Response.Error("something went wrong")
+            }
         } catch (error: Exception) {
             Response.Error(error.message.toString())
         }

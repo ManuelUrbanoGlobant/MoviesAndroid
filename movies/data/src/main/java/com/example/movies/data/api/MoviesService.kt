@@ -1,5 +1,6 @@
 package com.example.movies.data.api
 
+import com.example.movies.data.entities.MovieRecommendationListDto
 import com.example.movies.data.entities.dto.MovieDetailDTO
 import com.example.movies.data.entities.dto.MovieListDTO
 import retrofit2.Response
@@ -16,5 +17,15 @@ interface MoviesService {
     ): Response<MovieListDTO>
 
     @GET("movie/{id}")
-    suspend fun getMovieDetail(@Path("id") id: Int, @Query("api_key") api_key: String): Response<MovieDetailDTO>
+    suspend fun getMovieDetail(
+        @Path("id") id: Int,
+        @Query("api_key") api_key: String
+    ): Response<MovieDetailDTO>
+
+    @GET("movie/{id}/recommendations")
+    suspend fun getMovieRecommendations(
+        @Path("id") id: Int,
+        @Query("api_key") api_key: String,
+        @Query("page") page: Int
+    ): Response<MovieRecommendationListDto>
 }

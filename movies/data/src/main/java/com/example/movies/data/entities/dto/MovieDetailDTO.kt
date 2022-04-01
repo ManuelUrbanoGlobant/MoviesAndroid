@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class MovieDetailDTO(
     @SerializedName("backdrop_path")
-    val backdropPath: String,
+    val backdropPath: String?,
     @SerializedName("id")
     val id: Int,
     @SerializedName("overview")

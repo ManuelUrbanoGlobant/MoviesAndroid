@@ -5,7 +5,6 @@ data class Movie(
     val name: String = "",
     val date: String = "",
     val overview: String = "",
-    val director: String = "",
     val score: Double = 0.0,
     val thumbnail: String? = "",
     var isFavorite: Boolean = false

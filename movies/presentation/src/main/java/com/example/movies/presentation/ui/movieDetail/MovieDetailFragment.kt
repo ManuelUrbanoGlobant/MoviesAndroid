@@ -18,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.androidHelpers.extensions.showToast
 import com.example.movies.domain.entities.MovieDetail
+import com.example.movies.domain.entities.MovieRecommendation
 import com.example.movies.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -27,9 +28,9 @@ class MovieDetailFragment : BaseFragment() {
 
     private val viewModel: MovieDetailViewModel by viewModels()
 
-    var movieDetail: MutableState<MovieDetail?> = mutableStateOf(null)
+    private var movieDetail: MutableState<MovieDetail?> = mutableStateOf(null)
     private var isLoadingVisible: MutableState<Boolean> = mutableStateOf(false)
-
+    private var movieRecommendations: MutableState<List<MovieRecommendation>?> = mutableStateOf(null)
     private val args: MovieDetailFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -41,7 +42,10 @@ class MovieDetailFragment : BaseFragment() {
             setContent {
                 InitializeStateVariables()
                 reviewChangeStatesUi()
-                DetailScreen(movieDetail.value, isLoadingVisible.value)
+                DetailScreen(
+                    movieDetail.value, movieRecommendations.value, isLoadingVisible.value,
+                    onNavigateDetail = { dest -> findNavController().navigate(dest) },
+                )
             }
         }
     }
@@ -49,6 +53,7 @@ class MovieDetailFragment : BaseFragment() {
     @Composable
     private fun InitializeStateVariables() {
         movieDetail = remember { mutableStateOf(null) }
+        movieRecommendations = remember { mutableStateOf(null) }
         isLoadingVisible = remember { mutableStateOf(false) }
     }
 
@@ -56,13 +61,23 @@ class MovieDetailFragment : BaseFragment() {
     private fun reviewChangeStatesUi() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { uiState ->
+                viewModel.movieDetailUiState.collect { uiState ->
                     when (uiState) {
                         is MovieDetailUiState.Init -> isLoadingVisible.value = false
                         is MovieDetailUiState.Loading -> isLoadingVisible.value = true
                         is MovieDetailUiState.GetDetailInformation -> setSuccessMovieDetail(uiState)
-                        is MovieDetailUiState.Error -> showError(uiState)
+                        is MovieDetailUiState.Error -> showError(uiState.message)
                     }
+                }
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.movieRecommendationUiState.collect { uiState ->
+                when (uiState) {
+                    is MovieRecommendationUiState.Init -> isLoadingVisible.value = false
+                    is MovieRecommendationUiState.Loading -> isLoadingVisible.value = true
+                    is MovieRecommendationUiState.GetMovieRecommendations -> setSuccessMovieRecommendations(uiState)
+                    is MovieRecommendationUiState.Error -> showError(uiState.message)
                 }
             }
         }
@@ -73,15 +88,19 @@ class MovieDetailFragment : BaseFragment() {
         isLoadingVisible.value = false
     }
 
-    private fun showError(uiState: MovieDetailUiState.Error) {
-        requireContext().showToast(uiState.message)
+    private fun setSuccessMovieRecommendations(uiState: MovieRecommendationUiState.GetMovieRecommendations) {
+        movieRecommendations.value = uiState.recommendations
+    }
+
+    private fun showError(message: String) {
+        requireContext().showToast(message)
         isLoadingVisible.value = false
         findNavController().popBackStack()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getDetailMovie(args.movieId)
+        viewModel.fetchData(args.movieId)
     }
 
 }

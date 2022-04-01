@@ -10,11 +10,13 @@ import com.example.movies.data.datasource.MoviesRemoteDataSource
 import com.example.movies.data.datasource.MoviesRemoteDataSourceImpl
 import com.example.movies.data.db.MovieDao
 import com.example.movies.data.db.MovieDatabase
-import com.example.movies.data.mappers.MovieDetailDTOMapper
 import com.example.movies.data.mappers.MovieDTOMapper
+import com.example.movies.data.mappers.MovieDetailDTOMapper
 import com.example.movies.data.mappers.MovieORMMapper
 import com.example.movies.data.repositories.MoviesRepositoryImpl
 import com.example.movies.domain.repositories.MoviesRepository
+import com.example.movies.domain.usecases.movieRecommendations.GetMovieRecommendationsUseCase
+import com.example.movies.domain.usecases.movieRecommendations.GetMovieRecommendationsUseCaseImpl
 import com.example.movies.domain.usecases.favorites.*
 import com.example.movies.domain.usecases.movieDetail.GetDetailMovieUseCase
 import com.example.movies.domain.usecases.movieDetail.GetDetailMovieUseCaseImpl
@@ -88,6 +90,9 @@ object MoviesModule {
     @Provides
     fun provideGetDetailMovieUseCase(repository: MoviesRepository): GetDetailMovieUseCase =
         GetDetailMovieUseCaseImpl(repository)
+
+    @Provides
+    fun provideGetDetailMovieRecommendationUseCase(repository: MoviesRepository): GetMovieRecommendationsUseCase = GetMovieRecommendationsUseCaseImpl(repository)
 
     @Provides
     fun provideSaveMovieToFavouritesUseCase(repository: MoviesRepository): SaveMovieToFavouritesUseCase =

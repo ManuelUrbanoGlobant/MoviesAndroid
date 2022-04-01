@@ -14,7 +14,6 @@ class MovieDTOMapper : EntityMapper<MovieDTO, Movie> {
                 name = title,
                 date = releaseDate,
                 overview = overview,
-                director = "",
                 score = voteAverage,
                 thumbnail = backdropPath
             )

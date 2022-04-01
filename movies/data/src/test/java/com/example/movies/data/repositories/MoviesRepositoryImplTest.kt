@@ -3,17 +3,19 @@ package com.example.movies.data.repositories
 import com.example.kotlinhelpers.Response
 import com.example.movies.data.datasource.MoviesLocalDataSource
 import com.example.movies.data.datasource.MoviesRemoteDataSource
+import com.example.movies.data.entities.MovieRecommendationListDto
 import com.example.movies.data.entities.dto.MovieDetailDTO
 import com.example.movies.data.entities.dto.MovieListDTO
 import com.example.movies.data.entities.orm.MovieORM
 import com.example.movies.data.mappers.MovieDTOMapper
 import com.example.movies.data.mappers.MovieDetailDTOMapper
 import com.example.movies.data.mappers.MovieORMMapper
-import com.example.movies.domain.entities.Movie
-import io.mockk.*
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.*
-
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import retrofit2.Response as ResponseRetrofit
@@ -29,6 +31,7 @@ class MoviesRepositoryImplTest {
     private val mockMovieListDto: MovieListDTO = mockk(relaxed = true)
     private val mockMovieDetailDto: MovieDetailDTO = mockk(relaxed = true)
     private val mockMovieORM: MovieORM = mockk(relaxed = true)
+    private val mockMovieRecommendationListDto: MovieRecommendationListDto = mockk(relaxed = true)
     private val movieId = 1
     private val pageNumber = 1
 
@@ -127,6 +130,28 @@ class MoviesRepositoryImplTest {
 
         val response = moviesRepositoryImpl.getDetailMovie(movieId)
         assertEquals((response as Response.Error).message, messageException)
+    }
+
+
+    @Test
+    fun shouldCallGetRecommendationListDataSource() = runBlocking {
+        coEvery { mockMoviesRemoteDataSource.getRecommendationList(movieId, pageNumber) } returns ResponseRetrofit.success(
+            mockMovieRecommendationListDto
+        )
+
+        moviesRepositoryImpl.getRecommendedMovies(movieId, pageNumber)
+
+        coVerify(exactly = 1) { mockMoviesRemoteDataSource.getRecommendationList(movieId, pageNumber) }
+    }
+
+    @Test
+    fun shouldResponseSuccessCallGetRecommendationListDataSource() = runBlocking {
+        val responseRetrofit = ResponseRetrofit.success(mockMovieRecommendationListDto)
+        coEvery { mockMoviesRemoteDataSource.getRecommendationList(movieId, pageNumber) } returns responseRetrofit
+
+        val response = moviesRepositoryImpl.getRecommendedMovies(movieId, pageNumber)
+
+        assertTrue(response is Response.Success)
     }
 
 }
