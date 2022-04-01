@@ -139,7 +139,7 @@ class MoviesRepositoryImplTest {
             mockMovieRecommendationListDto
         )
 
-        moviesRepositoryImpl.getRecommendedMovies(movieId)
+        moviesRepositoryImpl.getRecommendedMovies(movieId, pageNumber)
 
         coVerify(exactly = 1) { mockMoviesRemoteDataSource.getRecommendationList(movieId, pageNumber) }
     }
@@ -149,7 +149,7 @@ class MoviesRepositoryImplTest {
         val responseRetrofit = ResponseRetrofit.success(mockMovieRecommendationListDto)
         coEvery { mockMoviesRemoteDataSource.getRecommendationList(movieId, pageNumber) } returns responseRetrofit
 
-        val response = moviesRepositoryImpl.getRecommendedMovies(movieId)
+        val response = moviesRepositoryImpl.getRecommendedMovies(movieId, pageNumber)
 
         assertTrue(response is Response.Success)
     }
