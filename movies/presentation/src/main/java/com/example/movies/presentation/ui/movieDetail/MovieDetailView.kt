@@ -45,18 +45,20 @@ fun DetailScreen(
                     .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.Top
             ) {
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(movieDetail?.getCompleteUrlToDetails())
-                        .crossfade(true)
-                        .build(),
-                    placeholder = null,
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(dimensionResource(id = R.dimen.height_image_detail))
-                )
+                if (!movieDetail?.thumbnail.isNullOrEmpty()) {
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(movieDetail?.getCompleteUrlToDetails())
+                            .crossfade(true)
+                            .build(),
+                        placeholder = null,
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(dimensionResource(id = R.dimen.height_image_detail))
+                    )
+                }
                 ContentDetail(movieDetail)
                 ContentRecommendation(movieRecommendations, onNavigateDetail)
             }
@@ -128,7 +130,9 @@ private fun RecommendationsHorizontalScroll(
                         )
                     onNavigateDetail(navDirection)
                 }) {
-                    MovieHorizontalItem(movie.getCompleteThumbnailUrl(), movie.name)
+                    if (!movie.thumbnail.isNullOrEmpty()) {
+                        MovieHorizontalItem(movie.getCompleteThumbnailUrl(), movie.name)
+                    }
                 }
             }
         }
