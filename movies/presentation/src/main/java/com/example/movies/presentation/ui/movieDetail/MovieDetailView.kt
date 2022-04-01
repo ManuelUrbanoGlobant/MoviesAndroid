@@ -2,9 +2,10 @@ package com.example.movies.presentation.ui.movieDetail
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -12,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDirections
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -31,82 +32,28 @@ fun DetailScreen(
     isLoadingVisible: Boolean = false,
     onNavigateDetail: (NavDirections) -> Unit = {}
 ) {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Top) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(movieDetail?.getCompleteUrlToDetails())
-                    .crossfade(true)
-                    .build(),
-                placeholder = null,
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(dimensionResource(id = R.dimen.height_image_detail))
-            )
-            ContentDetail(movieDetail)
-            Spacer(modifier = Modifier.width(16.dp))
-            ContentRecommendation(movieRecommendations, isLoadingVisible, onNavigateDetail)
-        }
-
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
         if (isLoadingVisible) {
             MovieLottieAnimation()
-        }
-    }
-
-}
-@Composable
-private fun ContentRecommendation(
-    recommendations: List<MovieRecommendation>?,
-    isLoadingVisible: Boolean,
-    onNavigateDetail: (NavDirections) -> Unit
-) {
-    if (!isLoadingVisible) {
-        Column(
-            modifier = Modifier
-                .wrapContentSize()
-                .padding(dimensionResource(id = R.dimen.padding_view_detail))
-        ) {
-            TextTitle(text = "Recommended Movies")
-            HorizontalMovieList(movieList = recommendations, onNavigateDetail)
-        }
-    }
-}
-
-@Composable
-fun HorizontalMovieList(
-    movieList: List<MovieRecommendation>?,
-    onNavigateDetail: (NavDirections) -> Unit,
-) {
-    Row {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
-            ContentListMovies(movieList, onNavigateDetail)
-        }
-    }
-}
-
-@Composable
-fun ContentListMovies(
-    movieList: List<MovieRecommendation>?,
-    onNavigateDetail: (NavDirections) -> Unit,
-) {
-    LazyColumn {
-        item {
-            movieList?.let {
-                LazyRow {
-                    itemsIndexed(items = movieList) { _, movie ->
-                        Box(Modifier.clickable {
-                            val navDirection =
-                                MovieDetailFragmentDirections.toDetailScreen(
-                                    movieId = movie.id
-                                )
-                            onNavigateDetail(navDirection)
-                        }) {
-                            MovieHorizontalItem(movie.getCompleteThumbnailUrl(), movie.name)
-                        }
-                    }
-                }
+        } else {
+            Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.Top) {
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(movieDetail?.getCompleteUrlToDetails())
+                        .crossfade(true)
+                        .build(),
+                    placeholder = null,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(dimensionResource(id = R.dimen.height_image_detail))
+                )
+                ContentDetail(movieDetail)
+                ContentRecommendation(movieRecommendations, onNavigateDetail)
             }
         }
     }
@@ -140,6 +87,46 @@ private fun ContentDetail(movieDetail: MovieDetail?) {
             modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.padding_view_detail)),
             text = movieDetail?.overview ?: ""
         )
+    }
+}
+
+@Composable
+private fun ContentRecommendation(
+    recommendations: List<MovieRecommendation>?,
+    onNavigateDetail: (NavDirections) -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .wrapContentSize()
+            .padding(dimensionResource(id = R.dimen.padding_view_detail))
+    ) {
+        TextTitle(
+            text = stringResource(R.string.recommended_movies_title),
+            modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.padding_view_detail))
+        )
+        RecommendationsHorizontalScroll(recommendations, onNavigateDetail)
+    }
+}
+
+@Composable
+private fun RecommendationsHorizontalScroll(
+    movieList: List<MovieRecommendation>?,
+    onNavigateDetail: (NavDirections) -> Unit,
+) {
+    movieList?.let {
+        LazyRow {
+            itemsIndexed(items = movieList) { _, movie ->
+                Box(Modifier.clickable {
+                    val navDirection =
+                        MovieDetailFragmentDirections.toDetailScreen(
+                            movieId = movie.id
+                        )
+                    onNavigateDetail(navDirection)
+                }) {
+                    MovieHorizontalItem(movie.getCompleteThumbnailUrl(), movie.name)
+                }
+            }
+        }
     }
 }
 
