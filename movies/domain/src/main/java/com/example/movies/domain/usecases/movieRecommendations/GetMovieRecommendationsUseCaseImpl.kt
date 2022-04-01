@@ -8,5 +8,5 @@ class GetMovieRecommendationsUseCaseImpl(private val moviesRepository: MoviesRep
     GetMovieRecommendationsUseCase {
 
     override suspend fun invoke(id: Int): Response<MovieRecommendationList> =
-        moviesRepository.getRecommendedMovies(id)
+        moviesRepository.getRecommendedMovies(id, 1)
 }

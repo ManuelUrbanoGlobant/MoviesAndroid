@@ -12,24 +12,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import com.example.androidHelpers.compose.styles.getMovieItemNameTextStyle
 import com.example.androidhelpers.R
 
 @Composable
 fun MovieHorizontalItem(thumbnailUrl: String, movieName : String, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
-            .width(150.dp)
-            .padding(5.dp)
-            .height(180.dp),
+            .width(dimensionResource(id = R.dimen.movie_item_card_width))
+            .padding(dimensionResource(id = R.dimen.padding_small))
+            .height(dimensionResource(id = R.dimen.movie_item_card_height)),
         shape = RoundedCornerShape(10.dp),
-        elevation = 5.dp,
+        elevation = dimensionResource(id = R.dimen.elevation_small),
     ) {
-        Box(modifier = Modifier.height(250.dp)) {
+        Box(modifier = Modifier.height(dimensionResource(id = R.dimen.movie_item_box_height))) {
             Image(
                 painter = rememberAsyncImagePainter(thumbnailUrl),
                 contentDescription = stringResource(R.string.movie_item_description),
@@ -52,10 +52,10 @@ fun MovieHorizontalItem(thumbnailUrl: String, movieName : String, modifier: Modi
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(12.dp),
+                    .padding(dimensionResource(id = R.dimen.padding_medium)),
                 contentAlignment = Alignment.BottomStart
             ) {
-                Text(movieName, style = TextStyle(color = Color.White, fontSize = 16.sp))
+                Text(movieName, style = getMovieItemNameTextStyle())
             }
         }
     }

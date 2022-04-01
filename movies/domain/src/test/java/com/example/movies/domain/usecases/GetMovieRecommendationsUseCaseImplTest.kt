@@ -1,8 +1,9 @@
-package com.example.movies.domain.usecases.movieRecommendations
+package com.example.movies.domain.usecases
 
 import com.example.kotlinhelpers.Response
 import com.example.movies.domain.entities.MovieRecommendationList
 import com.example.movies.domain.repositories.MoviesRepository
+import com.example.movies.domain.usecases.movieRecommendations.GetMovieRecommendationsUseCaseImpl
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -20,13 +21,14 @@ class GetMovieRecommendationsUseCaseImplTest {
     fun shouldInvokeRepository() = runBlocking {
         getMovieRecommendationsUseCaseImpl = GetMovieRecommendationsUseCaseImpl(mockMoviesRepository)
         val movieId = 1
-        coEvery { mockMoviesRepository.getRecommendedMovies(movieId) } returns Response.Success(
+        val page = 1
+        coEvery { mockMoviesRepository.getRecommendedMovies(movieId, page) } returns Response.Success(
             mockMovieDetail
         )
         val response = getMovieRecommendationsUseCaseImpl.invoke(movieId)
 
         Assertions.assertTrue(response is Response.Success)
 
-        coVerify { mockMoviesRepository.getRecommendedMovies(movieId) }
+        coVerify { mockMoviesRepository.getRecommendedMovies(movieId, page) }
     }
 }

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 interface MoviesRepository {
     suspend fun getListMovies(page: Int?): Response<MovieList>
     suspend fun getDetailMovie(id: Int): Response<MovieDetail>
-    suspend fun getRecommendedMovies(id: Int): Response<MovieRecommendationList>
+    suspend fun getRecommendedMovies(id: Int, page: Int): Response<MovieRecommendationList>
     suspend fun saveMovieToFavourites(movie: Movie): Response<Unit>
     suspend fun deleteMovieFromFavourites(id: Int): Response<Unit>
     suspend fun getFavouritesMovies(): Response<Flow<List<Movie>>>

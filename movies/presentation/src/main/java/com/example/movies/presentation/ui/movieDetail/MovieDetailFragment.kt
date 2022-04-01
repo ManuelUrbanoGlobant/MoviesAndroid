@@ -76,9 +76,7 @@ class MovieDetailFragment : BaseFragment() {
                 when (uiState) {
                     is MovieRecommendationUiState.Init -> isLoadingVisible.value = false
                     is MovieRecommendationUiState.Loading -> isLoadingVisible.value = true
-                    is MovieRecommendationUiState.GetMovieRecommendations -> {
-                        setSuccessMovieRecommendations(uiState)
-                    }
+                    is MovieRecommendationUiState.GetMovieRecommendations -> setSuccessMovieRecommendations(uiState)
                     is MovieRecommendationUiState.Error -> showError(uiState.message)
                 }
             }
