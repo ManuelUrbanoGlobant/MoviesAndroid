@@ -79,9 +79,9 @@ class MoviesRepositoryImpl(
         }
     }
 
-    override suspend fun getRecommendedMovies(id: Int, page: Int?): Response<MovieRecommendationList> {
+    override suspend fun getRecommendedMovies(id: Int): Response<MovieRecommendationList> {
         return try {
-            val response = moviesRemoteDataSource.getRecommendationList(id, page ?: 1)
+            val response = moviesRemoteDataSource.getRecommendationList(id, 1)
             val body = response.body()
             if (body != null && response.isSuccessful) {
                 Response.Success(body.toDomain())

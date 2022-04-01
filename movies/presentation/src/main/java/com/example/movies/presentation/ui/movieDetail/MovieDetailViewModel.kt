@@ -3,8 +3,8 @@ package com.example.movies.presentation.ui.movieDetail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kotlinhelpers.Response
-import com.example.movies.domain.usecases.GetMovieRecommendationsUseCase
 import com.example.movies.domain.usecases.movieDetail.GetDetailMovieUseCase
+import com.example.movies.domain.usecases.movieRecommendations.GetMovieRecommendationsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,27 +19,48 @@ class MovieDetailViewModel @Inject constructor(
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<MovieDetailUiState> =
+    private val _movieDetailUiState: MutableStateFlow<MovieDetailUiState> =
         MutableStateFlow(MovieDetailUiState.Init)
 
-    val uiState: StateFlow<MovieDetailUiState> = _uiState
+    val movieDetailUiState: StateFlow<MovieDetailUiState> = _movieDetailUiState
+
+    private val _movieRecommendationUiState: MutableStateFlow<MovieRecommendationUiState> =
+        MutableStateFlow(MovieRecommendationUiState.Init)
+
+    val movieRecommendationUiState: StateFlow<MovieRecommendationUiState> = _movieRecommendationUiState
+
+    fun fetchData(movieId: Int) {
+        getDetailMovie(movieId)
+        viewModelScope.launch {
+            movieDetailUiState.collect {
+                if (it is MovieDetailUiState.GetDetailInformation) {
+                    getMovieRecommendations(movieId)
+                }
+            }
+        }
+    }
 
     fun getDetailMovie(id: Int) {
         viewModelScope.launch(dispatcher) {
-            _uiState.emit(MovieDetailUiState.Loading)
-
-            when (val response = movieRecommendationsUseCase.invoke(id, 1)) {
-                is Response.Success -> {
-                    _uiState.emit(MovieDetailUiState.GetMovieRecommendations(response.value.movies))
-                }
-                is Response.Error -> _uiState.emit(MovieDetailUiState.Error(response.message))
-            }
+            _movieDetailUiState.emit(MovieDetailUiState.Loading)
 
             when (val response = movieDetailMovieUseCase.invoke(id)) {
                 is Response.Success -> {
-                    _uiState.emit(MovieDetailUiState.GetDetailInformation(response.value))
+                    _movieDetailUiState.emit(MovieDetailUiState.GetDetailInformation(response.value))
                 }
-                is Response.Error -> _uiState.emit(MovieDetailUiState.Error(response.message))
+                is Response.Error -> _movieDetailUiState.emit(MovieDetailUiState.Error(response.message))
+            }
+        }
+    }
+
+    fun getMovieRecommendations(movieId: Int) {
+        viewModelScope.launch(dispatcher) {
+            _movieRecommendationUiState.emit(MovieRecommendationUiState.Loading)
+            when (val response = movieRecommendationsUseCase.invoke(movieId)) {
+                is Response.Success -> {
+                    _movieRecommendationUiState.emit(MovieRecommendationUiState.GetMovieRecommendations(response.value.movies))
+                }
+                is Response.Error -> _movieRecommendationUiState.emit(MovieRecommendationUiState.Error(response.message))
             }
         }
     }

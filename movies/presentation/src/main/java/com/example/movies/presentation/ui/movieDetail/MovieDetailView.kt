@@ -39,7 +39,12 @@ fun DetailScreen(
         if (isLoadingVisible) {
             MovieLottieAnimation()
         } else {
-            Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.Top) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.Top
+            ) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(movieDetail?.getCompleteUrlToDetails())

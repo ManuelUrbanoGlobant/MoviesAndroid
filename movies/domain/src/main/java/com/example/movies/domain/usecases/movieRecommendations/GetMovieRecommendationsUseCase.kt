@@ -1,8 +1,8 @@
-package com.example.movies.domain.usecases
+package com.example.movies.domain.usecases.movieRecommendations
 
 import com.example.kotlinhelpers.Response
 import com.example.movies.domain.entities.MovieRecommendationList
 
 interface GetMovieRecommendationsUseCase {
-    suspend fun invoke(id: Int, page: Int): Response<MovieRecommendationList>
+    suspend fun invoke(id: Int): Response<MovieRecommendationList>
 }

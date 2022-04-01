@@ -61,14 +61,25 @@ class MovieDetailFragment : BaseFragment() {
     private fun reviewChangeStatesUi() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { uiState ->
+                viewModel.movieDetailUiState.collect { uiState ->
                     when (uiState) {
                         is MovieDetailUiState.Init -> isLoadingVisible.value = false
                         is MovieDetailUiState.Loading -> isLoadingVisible.value = true
                         is MovieDetailUiState.GetDetailInformation -> setSuccessMovieDetail(uiState)
-                        is MovieDetailUiState.GetMovieRecommendations -> setSuccessMovieRecommendations(uiState)
-                        is MovieDetailUiState.Error -> showError(uiState)
+                        is MovieDetailUiState.Error -> showError(uiState.message)
                     }
+                }
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.movieRecommendationUiState.collect { uiState ->
+                when (uiState) {
+                    is MovieRecommendationUiState.Init -> isLoadingVisible.value = false
+                    is MovieRecommendationUiState.Loading -> isLoadingVisible.value = true
+                    is MovieRecommendationUiState.GetMovieRecommendations -> {
+                        setSuccessMovieRecommendations(uiState)
+                    }
+                    is MovieRecommendationUiState.Error -> showError(uiState.message)
                 }
             }
         }
@@ -79,19 +90,19 @@ class MovieDetailFragment : BaseFragment() {
         isLoadingVisible.value = false
     }
 
-    private fun setSuccessMovieRecommendations(uiState: MovieDetailUiState.GetMovieRecommendations) {
+    private fun setSuccessMovieRecommendations(uiState: MovieRecommendationUiState.GetMovieRecommendations) {
         movieRecommendations.value = uiState.recommendations
     }
 
-    private fun showError(uiState: MovieDetailUiState.Error) {
-        requireContext().showToast(uiState.message)
+    private fun showError(message: String) {
+        requireContext().showToast(message)
         isLoadingVisible.value = false
         findNavController().popBackStack()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getDetailMovie(args.movieId)
+        viewModel.fetchData(args.movieId)
     }
 
 }
