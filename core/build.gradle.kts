@@ -57,6 +57,7 @@ dependencies {
     //Material
     implementation(Dependencies.Material.googleMaterial)
 
+
     //Test
     testImplementation(Dependencies.Test.junit)
 
@@ -74,6 +75,8 @@ dependencies {
     implementation(Dependencies.Pager.pager)
     implementation(Dependencies.Pager.indicators)
 
+    implementation(Dependencies.AndroidX.navigationFragment)
+    implementation(Dependencies.AndroidX.navigationUi)
     //AndroidTest
     androidTestImplementation(Dependencies.AndroidTest.junit)
     androidTestImplementation(Dependencies.AndroidTest.espresso)

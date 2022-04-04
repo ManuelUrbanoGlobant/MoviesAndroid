@@ -30,6 +30,11 @@ class MainListFragment : BaseFragment() {
     private var moviesList: MutableState<List<Movie>?> = mutableStateOf(null)
     private var isLoadingVisible: MutableState<Boolean> = mutableStateOf(false)
 
+    companion object {
+        fun getInstance(onActionMovies: ()->Unit) = MainListFragment().apply {
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
